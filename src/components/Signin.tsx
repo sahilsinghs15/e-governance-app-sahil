@@ -312,6 +312,7 @@ const Signin = () => {
             variant={"outline"}
             disabled={!email.current || !password.current || checkingPassword}
             onClick={handleSubmit}
+            className="hover:cursor-pointer"
           >
             Login
           </Button>
