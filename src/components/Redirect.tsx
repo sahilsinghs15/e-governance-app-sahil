@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/router"
-import { use, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export function Redirect( { to}  : { to : string}) {
-    const router = useRouter();
-    useEffect(()=>{
-        router.push(to)
-    } , [] )
-    return (
-        <div></div>
-    )
+export function Redirect({ to }: { to: string }) {
+  const router = useRouter();
+  useEffect(() => {
+    router.push(to);
+  }, []);
+
+  return <div></div>;
 }
