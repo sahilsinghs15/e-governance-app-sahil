@@ -1,8 +1,8 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -17,24 +17,24 @@ const Signup = () => {
     confirmPassReq: false,
   });
 
-  const email = useRef("");
-  const password = useRef("");
-  const confirmPassword = useRef("");
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
+  const confirmPasswordRef = useRef("");
 
   const handleSubmit = async (e?: React.FormEvent<HTMLButtonElement>) => {
     e?.preventDefault();
 
-    if (!email.current || !password.current || !confirmPassword.current) {
+    if (!emailRef.current || !passwordRef.current || !confirmPasswordRef.current) {
       setRequiredError({
-        emailReq: !email.current,
-        passReq: !password.current,
-        confirmPassReq: !confirmPassword.current,
+        emailReq: !emailRef.current,
+        passReq: !passwordRef.current,
+        confirmPassReq: !confirmPasswordRef.current,
       });
       toast.error("All fields are required");
       return;
     }
 
-    if (password.current !== confirmPassword.current) {
+    if (passwordRef.current !== confirmPasswordRef.current) {
       setRequiredError((prevState) => ({
         ...prevState,
         confirmPassReq: true,
@@ -85,7 +85,7 @@ const Signup = () => {
                 id="email"
                 placeholder="name@email.com"
                 onChange={(e) => {
-                  email.current = e.target.value;
+                  emailRef.current = e.target.value;
                   setRequiredError((prevState) => ({
                     ...prevState,
                     emailReq: false,
@@ -106,7 +106,7 @@ const Signup = () => {
                   id="password"
                   placeholder="••••••••"
                   onChange={(e) => {
-                    password.current = e.target.value;
+                    passwordRef.current = e.target.value;
                     setRequiredError((prevState) => ({
                       ...prevState,
                       passReq: false,
@@ -169,7 +169,7 @@ const Signup = () => {
                   id="confirmPassword"
                   placeholder="••••••••"
                   onChange={(e) => {
-                    confirmPassword.current = e.target.value;
+                    confirmPasswordRef.current = e.target.value;
                     setRequiredError((prevState) => ({
                       ...prevState,
                       confirmPassReq: false,
@@ -227,7 +227,7 @@ const Signup = () => {
             size={"lg"}
             variant={"outline"}
             disabled={
-              !email.current || !password.current || !confirmPassword.current
+              !emailRef.current || !passwordRef.current || !confirmPasswordRef.current
             }
             onClick={handleSubmit}
             className="hover:cursor-pointer"
