@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
@@ -200,38 +199,8 @@ const Signin = () => {
                 placeholder="name@email.com"
                 value={email.current}
                 onChange={handleEmailChange}
-                // onKeyDown={handleKeyDown}
-                // onBlur={() => setSuggestedDomains([])}
+                
               />
-              {/* {email.current && suggestedDomains.length > 0 && (
-                <ul
-                  ref={dropdownRef}
-                  className={`absolute top-20 z-50 max-h-96 w-full min-w-[8rem] overflow-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2`}
-                >
-                  {suggestedDomains.map((domain: string, index: number) => (
-                    <>
-                      <li
-                        key={domain}
-                        value={domain}
-                        //@ts-ignore
-                        ref={(listItem) =>
-                          (suggestionRefs.current[index] = listItem!)
-                        }
-                        onMouseDown={() => handleSuggestionClick(domain)}
-                        onClick={() => handleSuggestionClick(domain)}
-                        className={`relative flex w-full cursor-default select-none items-center rounded-sm p-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${
-                          focusedIndex === index
-                            ? "bg-primary-foreground font-medium"
-                            : ""
-                        }`}
-                      >
-                        {email.current.split("@")[0]}@{domain}
-                      </li>
-                      {index < suggestedDomains.length - 1 && <Separator />}
-                    </>
-                  ))}
-                </ul>
-              )} */}
               {requiredError.emailReq && (
                 <span className="text-red-500">Email is required</span>
               )}
