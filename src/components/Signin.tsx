@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Redirect } from  "@/components/Redirect"
 
 const emailDomains = [
   "gmail.com",
@@ -82,28 +83,28 @@ const Signin = () => {
     setSuggestedDomains(matchingDomains);
   };
 
-  const handleSuggestionClick = (domain: string) => {
-    const [username] = email.current.split("@");
-    const newEmail = `${username}@${domain}`;
-    email.current = newEmail;
-    passwordRef.current?.focus();
-    setSuggestedDomains([]);
-  };
+  // const handleSuggestionClick = (domain: string) => {
+  //   const [username] = email.current.split("@");
+  //   const newEmail = `${username}@${domain}`;
+  //   email.current = newEmail;
+  //   passwordRef.current?.focus();
+  //   setSuggestedDomains([]);
+  // };
 
   // Handle keyboard events for navigating and selecting suggestions
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && focusedIndex >= 0 && suggestedDomains.length > 0) {
-      handleSuggestionClick(suggestedDomains[focusedIndex]);
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setFocusedIndex((prevIndex) =>
-        Math.min(prevIndex + 1, suggestedDomains.length - 1)
-      );
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setFocusedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-    }
-  };
+  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter" && focusedIndex >= 0 && suggestedDomains.length > 0) {
+  //     handleSuggestionClick(suggestedDomains[focusedIndex]);
+  //   } else if (e.key === "ArrowDown") {
+  //     e.preventDefault();
+  //     setFocusedIndex((prevIndex) =>
+  //       Math.min(prevIndex + 1, suggestedDomains.length - 1)
+  //     );
+  //   } else if (e.key === "ArrowUp") {
+  //     e.preventDefault();
+  //     setFocusedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+  //   }
+  // };
 
   const handleSubmit = async (e?: React.FormEvent<HTMLButtonElement>) => {
     const loadId = toast.loading("Signing in...");
@@ -128,7 +129,8 @@ const Signin = () => {
 
     toast.dismiss(loadId);
     if (!res?.error) {
-      router.push("/");
+      <Redirect to="/home"/>
+      // router.push("/");
       toast.success("Signed In");
     } else {
       if (res.status === 401) {

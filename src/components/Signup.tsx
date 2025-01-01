@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Redirect} from "@/components/Redirect"
 
 const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -49,6 +50,7 @@ const Signup = () => {
     setTimeout(() => {
       toast.success("Account created successfully");
     }, 1000);
+    <Redirect to="/home"/>
   };
 
   return (

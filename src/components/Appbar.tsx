@@ -1,7 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Modal } from "./ui/modal";
+import  Account  from "./Account"
 
 export const Appbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,10 +19,16 @@ export const Appbar = () => {
       </div>
 
       {/* Join Button */}
-      <div className="pr-40 m-3">
-        <Button onClick={handleOpenModal} variant="outline" size="sm">
-          Join
-        </Button>
+      <div className="flex justify-center items-center gap-5">
+        <div className="pr-30 m-3">
+          <Button onClick={handleOpenModal} variant="outline" size="sm">
+            Join
+          </Button>
+        </div>
+        
+        <div className="m-3">
+          <Account />
+        </div>
       </div>
 
       {/* Modal */}

@@ -16,7 +16,7 @@ const Sidebar = () => {
       {/* Sidebar Button */}
       <div
         onClick={toggleSidebar}
-        className="p-2 text-white bg-[#100c14] rounded-md focus:outline-none border-r border-gray-600 h-full hover:cursor-pointer flex justify-center items-center "
+        className="p-2 text-white bg-[#100c14] rounded-md focus:outline-none border-r border-gray-600 h-full hover:cursor-pointer flex justify-center py-6"
       >
         {isOpen ? "Close" : "Menu"}
       </div>
