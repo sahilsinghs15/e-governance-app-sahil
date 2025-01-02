@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Redirect} from "@/components/Redirect"
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,15 +17,23 @@ const Signup = () => {
     passReq: false,
     confirmPassReq: false,
   });
+  const [loading, setLoading] = useState(false); // State to manage loading spinner
 
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
-  const confirmPasswordRef = useRef("");
+  const emailRef = useRef<string>("");
+  const passwordRef = useRef<string>("");
+  const confirmPasswordRef = useRef<string>("");
+
+  const router = useRouter(); // For redirection
 
   const handleSubmit = async (e?: React.FormEvent<HTMLButtonElement>) => {
     e?.preventDefault();
 
-    if (!emailRef.current || !passwordRef.current || !confirmPasswordRef.current) {
+    // Basic validation
+    if (
+      !emailRef.current ||
+      !passwordRef.current ||
+      !confirmPasswordRef.current
+    ) {
       setRequiredError({
         emailReq: !emailRef.current,
         passReq: !passwordRef.current,
@@ -44,13 +52,39 @@ const Signup = () => {
       return;
     }
 
-    toast.loading("Signing up...");
+    try {
+      setLoading(true); // Show spinner
+      toast.loading("Signing up...");
 
-    // Simulate API request
-    setTimeout(() => {
-      toast.success("Account created successfully");
-    }, 1000);
-    <Redirect to="/home"/>
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailRef.current,
+          password: passwordRef.current,
+        }),
+      });
+
+      if (response.ok) {
+        toast.dismiss();
+        toast.success("Signup successful! Redirecting...");
+        setTimeout(() => {
+          router.push("/home"); // Redirect to home page
+        }, 1500);
+      } else {
+        const data = await response.json();
+        toast.dismiss();
+        toast.error(data.error || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast.dismiss();
+      toast.error("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false); // Hide spinner
+    }
   };
 
   return (
@@ -82,9 +116,9 @@ const Signup = () => {
             <div className="relative flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
-                className="focus:ring-none border-none bg-primary/5 focus:outline-none"
                 name="email"
                 id="email"
+                className="focus:ring-none border-none bg-primary/5 focus:outline-none"
                 placeholder="name@email.com"
                 onChange={(e) => {
                   emailRef.current = e.target.value;
@@ -102,10 +136,10 @@ const Signup = () => {
               <Label htmlFor="password">Password</Label>
               <div className="flex">
                 <Input
-                  className="focus:ring-none border-none bg-primary/5 text-black focus:outline-none"
                   name="password"
                   type={isPasswordVisible ? "text" : "password"}
                   id="password"
+                  className="focus:ring-none border-none bg-primary/5 focus:outline-none"
                   placeholder="••••••••"
                   onChange={(e) => {
                     passwordRef.current = e.target.value;
@@ -116,8 +150,8 @@ const Signup = () => {
                   }}
                 />
                 <button
-                  className="absolute bottom-0 right-0 flex h-10 items-center px-4 text-neutral-500"
                   onClick={() => setIsPasswordVisible((prev) => !prev)}
+                  className="absolute bottom-0 right-0 flex h-10 items-center px-4 text-neutral-500"
                 >
                   {isPasswordVisible ? (
                     <svg
@@ -165,11 +199,11 @@ const Signup = () => {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="flex">
                 <Input
-                  className="focus:ring-none border-none bg-primary/5 text-black focus:outline-none"
                   name="confirmPassword"
                   type={isConfirmPasswordVisible ? "text" : "password"}
                   id="confirmPassword"
                   placeholder="••••••••"
+                  className="focus:ring-none border-none bg-primary/5 focus:outline-none"
                   onChange={(e) => {
                     confirmPasswordRef.current = e.target.value;
                     setRequiredError((prevState) => ({
@@ -179,10 +213,10 @@ const Signup = () => {
                   }}
                 />
                 <button
-                  className="absolute bottom-0 right-0 flex h-10 items-center px-4 text-neutral-500"
                   onClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
+                  className="absolute bottom-0 right-0 flex h-10 items-center px-4 text-neutral-500"
                 >
-                  {isConfirmPasswordVisible ? (
+                  {isConfirmPasswordVisible  ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -229,12 +263,15 @@ const Signup = () => {
             size={"lg"}
             variant={"outline"}
             disabled={
-              !emailRef.current || !passwordRef.current || !confirmPasswordRef.current
+              loading ||
+              !emailRef.current ||
+              !passwordRef.current ||
+              !confirmPasswordRef.current
             }
             onClick={handleSubmit}
             className="hover:cursor-pointer"
           >
-            Signup
+            {loading ? "Signing up..." : "Signup"}
           </Button>
         </div>
       </motion.div>
@@ -242,5 +279,6 @@ const Signup = () => {
     </section>
   );
 };
+
 
 export default Signup;

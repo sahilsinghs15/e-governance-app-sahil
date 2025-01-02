@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Redirect } from  "@/components/Redirect"
+import axios from "axios"
 
 const emailDomains = [
   "gmail.com",
@@ -24,8 +24,10 @@ const Signin = () => {
     emailReq: false,
     passReq: false,
   });
+  const [loading, setLoading] = useState(false);
   const [suggestedDomains, setSuggestedDomains] =
     useState<string[]>(emailDomains);
+    const [error, setError] = useState("");
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const passwordRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -83,87 +85,46 @@ const Signin = () => {
     setSuggestedDomains(matchingDomains);
   };
 
-  // const handleSuggestionClick = (domain: string) => {
-  //   const [username] = email.current.split("@");
-  //   const newEmail = `${username}@${domain}`;
-  //   email.current = newEmail;
-  //   passwordRef.current?.focus();
-  //   setSuggestedDomains([]);
-  // };
-
-  // Handle keyboard events for navigating and selecting suggestions
-  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter" && focusedIndex >= 0 && suggestedDomains.length > 0) {
-  //     handleSuggestionClick(suggestedDomains[focusedIndex]);
-  //   } else if (e.key === "ArrowDown") {
-  //     e.preventDefault();
-  //     setFocusedIndex((prevIndex) =>
-  //       Math.min(prevIndex + 1, suggestedDomains.length - 1)
-  //     );
-  //   } else if (e.key === "ArrowUp") {
-  //     e.preventDefault();
-  //     setFocusedIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-  //   }
-  // };
-
-  const handleSubmit = async (e?: React.FormEvent<HTMLButtonElement>) => {
-    const loadId = toast.loading("Signing in...");
-    if (e) {
-      e.preventDefault();
-    }
-
-    if (!email.current || !password.current) {
-      setRequiredError({
-        emailReq: email.current ? false : true,
-        passReq: password.current ? false : true,
-      });
-      toast.dismiss(loadId);
+  const handleSubmit = async () => {
+    if (!email || !password) {
+      toast.error("Please fill in all required fields.");
       return;
     }
-    setCheckingPassword(true);
+
+    setLoading(true);
     const res = await signIn("credentials", {
-      username: email.current,
-      password: password.current,
-      redirect: false,
+      email,
+      password,
+      redirect: false, // Prevent redirect on failure
     });
 
-    toast.dismiss(loadId);
-    if (!res?.error) {
-      <Redirect to="/home"/>
-      // router.push("/");
-      toast.success("Signed In");
+    setLoading(false);
+
+    if (res?.error) {
+      setError(res.error);
+      toast.error(res.error);
     } else {
-      if (res.status === 401) {
-        toast.error("Invalid Credentials, try again!");
-      } else if (res.status === 400) {
-        toast.error("Missing Credentials!");
-      } else if (res.status === 404) {
-        toast.error("Account not found!");
-      } else if (res.status === 403) {
-        toast.error("Forbidden!");
-      } else {
-        toast.error("oops something went wrong..!");
-      }
-      setCheckingPassword(false);
+      toast.success("Successfully signed in!");
+      router.push("/home");
     }
   };
 
-  // Handle clicks outside the dropdown
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setSuggestedDomains([]);
-      }
-    };
+  // // Handle clicks outside the dropdown
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       setSuggestedDomains([]);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <section className="wrapper relative flex min-h-screen items-center justify-center overflow-hidden antialiased">
@@ -180,8 +141,7 @@ const Signin = () => {
       >
         <div className="flex flex-col text-center">
           <h2 className="text-3xl font-semibold tracking-tighter xl:text-4xl">
-            Welcome to{" "}
-            <br/>
+            Welcome to <br />
             <span className="bg-gradient-to-b from-blue-400 to-blue-700 bg-clip-text pr-1 font-black tracking-tighter text-transparent">
               E-Governance
             </span>
@@ -201,7 +161,6 @@ const Signin = () => {
                 placeholder="name@email.com"
                 value={email.current}
                 onChange={handleEmailChange}
-                
               />
               {requiredError.emailReq && (
                 <span className="text-red-500">Email is required</span>
@@ -211,7 +170,7 @@ const Signin = () => {
               <Label>Password</Label>
               <div className="flex">
                 <Input
-                  className="focus:ring-none border-none bg-primary/5 text-black focus:outline-none"
+                  className="focus:ring-none border-none bg-primary/5 focus:outline-none"
                   name="password"
                   type={isPasswordVisible ? "text" : "password"}
                   id="password"
