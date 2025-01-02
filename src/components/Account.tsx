@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { FaSignOutAlt, FaWallet } from "react-icons/fa";
 import { Redirect } from "./Redirect";
 import { useRouter } from "next/navigation";
-
+import { signOut } from "next-auth/react";
 const Account = () => {
   const  [ openMenu , setMenuOpen ] = useState(false);
   const router = useRouter();
@@ -14,12 +14,20 @@ const Account = () => {
     setMenuOpen( prev => !prev);
   }
 
-  const handleLogout = () => {
-    toast.success("Logged out");
-    // <Redirect to="/signin" />
-    router.push("/signin")
+  const handleLogout = async () => {
+    try {
+      // Display a success toast message
+      toast.success("Logged out successfully!");
 
-  }
+      // Perform sign out using next-auth
+      await signOut({
+        callbackUrl: "/signin", // Redirects the user to the signin page after logout
+      });
+    } catch (error) {
+      // Handle logout errors if any
+      toast.error("Failed to log out. Please try again.");
+    }
+  };
 
   const walletHandler = () => {
     toast.success("Opened wallet");
