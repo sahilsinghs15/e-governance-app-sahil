@@ -6,9 +6,7 @@ import { Student } from "@/models/Student";
 import { connectToDB } from "@/db/mongo";
 
 export const authOptions: AuthOptions = {
-  session: {
-    strategy: "jwt", // Ensure the type matches SessionStrategy
-  },
+  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -26,7 +24,6 @@ export const authOptions: AuthOptions = {
         }
 
         await connectToDB();
-
         const student = await Student.findOne({ email: credentials.email });
         if (!student) {
           throw new Error("No user found with the provided email");
@@ -40,18 +37,10 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        return {
-          id: student._id,
-          email: student.email,
-          name: student.name,
-        };
+        return { id: student._id, email: student.email, name: student.name };
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
-    // signUp: "/auth/signup",
-    error: "/auth/signin",
-  },
+  pages: { signIn: "/auth/signin", error: "/auth/signin" },
   secret: process.env.NEXTAUTH_SECRET,
 };

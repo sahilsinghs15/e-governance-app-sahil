@@ -39,75 +39,56 @@ const Signin = () => {
   const email = useRef("");
   const password = useRef("");
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    email.current = value;
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      email.current = value;
 
-    setFocusedIndex(0);
-    setRequiredError((prevState) => ({
-      ...prevState,
-      emailReq: false,
-    }));
+      setRequiredError((prevState) => ({
+        ...prevState,
+        emailReq: false,
+      }));
 
-    // Check if the input is a phone number
-    const phoneNumberRegex = /^[0-9]{10}$/;
-    if (phoneNumberRegex.test(value)) {
-      setSuggestedDomains([]); // Clear suggestions for phone numbers
-      return;
-    }
+      if (!value.includes("@")) {
+        setSuggestedDomains(emailDomains);
+        return;
+      }
 
-    if (!value.includes("@")) {
-      setSuggestedDomains(emailDomains);
-      return;
-    }
+      const [, currentDomain] = value.split("@");
+      const matchingDomains = emailDomains.filter((domain) =>
+        domain.startsWith(currentDomain)
+      );
+      setSuggestedDomains(matchingDomains);
+    };
 
-    const [, currentDomain] = value.split("@");
+    const handleSubmit = async () => {
+      if (!email.current || !password.current) {
+        toast.error("Please fill in all required fields.");
+        return;
+      }
 
-    // Clear suggestions if domain doesn't match
-    if (
-      !currentDomain ||
-      !emailDomains.some((domain) => domain.startsWith(currentDomain))
-    ) {
-      setSuggestedDomains([]); // Hide suggestions for mismatched domains
-      return;
-    }
+      setLoading(true);
+      try {
+        const res = await signIn("credentials", {
+          email: email.current,
+          password: password.current,
+          redirect: false,
+        });
 
-    // Check for exact matches and filter for partial matches
-    const exactMatch = emailDomains.find((domain) => domain === currentDomain);
-    if (exactMatch) {
-      setSuggestedDomains([]);
-      return;
-    }
+        setLoading(false);
 
-    const matchingDomains = emailDomains.filter((domain) =>
-      domain.startsWith(currentDomain)
-    );
-    setSuggestedDomains(matchingDomains);
-  };
-
-  const handleSubmit = async () => {
-    if (!email || !password) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-
-    setLoading(true);
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false, // Prevent redirect on failure
-    });
-
-    setLoading(false);
-
-    if (res?.error) {
-      setError(res.error);
-      toast.error(res.error);
-    } else {
-      toast.success("Successfully signed in!");
-      router.push("/home");
-    }
-  };
+        if (res?.error) {
+          console.error("Sign-in error:", res.error);
+          toast.error(res.error);
+        } else {
+          toast.success("Successfully signed in!");
+          router.push("/home");
+        }
+      } catch (error) {
+        console.error("Unexpected error during sign-in:", error);
+        toast.error("An unexpected error occurred. Please try again.");
+        setLoading(false);
+      }
+    };
 
   // // Handle clicks outside the dropdown
   // useEffect(() => {
@@ -240,11 +221,36 @@ const Signin = () => {
           <Button
             size={"lg"}
             variant={"outline"}
-            disabled={!email.current || !password.current || checkingPassword}
+            disabled={loading || !email.current || !password.current}
             onClick={handleSubmit}
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer flex items-center justify-center gap-2"
           >
-            Login
+            {loading && (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+                <span>Processing...</span>
+              </>
+            )}
+            {!loading && <span>Login</span>}
           </Button>
         </div>
       </motion.div>
