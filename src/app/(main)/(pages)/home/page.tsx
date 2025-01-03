@@ -1,4 +1,4 @@
-import { Appbar } from "@/components/Appbar";
+// import { Appbar } from "@/components/Appbar";
 import { Footer } from "@/components/Footer";
 import { Greeting } from "@/components/Greeting";
 // import Sidebar from "@/components/Sidebar";
@@ -21,9 +21,9 @@ export default async function Home() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col gap-6 mt-3">
-        <div className="w-full">
+        {/* <div className="w-full">
           <Appbar />
-        </div>
+        </div> */}
 
         {/* Page Header */}
         <div className="flex items-center justify-between">
