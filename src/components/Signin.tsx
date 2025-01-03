@@ -14,13 +14,12 @@ const emailDomains = [
   "yahoo.com",
   "outlook.com",
   "hotmail.com",
-
 ];
 
 const Signin = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkingPassword, setCheckingPassword] = useState(false);
-  const [requiredError, setRequiredError] = useState({
+  const [requiredError, setRequiredError] = useState({ 
     emailReq: false,
     passReq: false,
   });
@@ -37,6 +36,7 @@ const Signin = () => {
   }
   const router = useRouter();
   const email = useRef("");
+  const username = useRef("");        
   const password = useRef("");
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +69,7 @@ const Signin = () => {
       setLoading(true);
       try {
         const res = await signIn("credentials", {
+          username : username.current,
           email: email.current,
           password: password.current,
           redirect: false,
@@ -134,6 +135,17 @@ const Signin = () => {
         <div className="flex flex-col gap-8">
           <div className="grid w-full items-center gap-4">
             <div className="relative flex flex-col gap-2">
+
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  className="focus:ring-none border-none bg-primary/5 focus:outline-none"
+                  name="username"
+                  id="username"
+                  placeholder="Your username"
+                  onChange={(e) => {
+                    username.current = e.target.value;
+                  }}
+                />
               <Label htmlFor="email">Email</Label>
               <Input
                 className="focus:ring-none border-none bg-primary/5 focus:outline-none"

@@ -7,23 +7,26 @@ import { connectToDB } from "@/db/mongo";
 export const authOptions: AuthOptions = {
   session: { strategy: "jwt" },
   providers: [
-    
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username : { label : "Username" , type : "text"},
+        username: { label: "Username", type: "text" },
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.username ||!credentials?.email || !credentials?.password) {
-          throw new Error("Missing username , email or password");
+        if (!credentials?.username || !credentials?.email || !credentials?.password) {
+          throw new Error("Missing username, email, or password");
         }
 
         await connectToDB();
-        const student = await Student.findOne({ email: credentials.email });
+        const student = await Student.findOne({ 
+          email: credentials.email, 
+          username: credentials.username 
+        });
+
         if (!student) {
-          throw new Error("No user found with the provided email");
+          throw new Error("No user found with the provided email and username combination");
         }
 
         const isValidPassword = await bcrypt.compare(
