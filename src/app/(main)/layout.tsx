@@ -1,6 +1,7 @@
 // app/layout.tsx
 
 import { Appbar } from "@/components/Appbar";
+import { Footer } from "@/components/Footer";
 import { Inter } from "next/font/google";
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           <Appbar />
         </div>
         {children}
+        <Footer />
       </body>
     </html>
   );
