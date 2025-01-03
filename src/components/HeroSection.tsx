@@ -2,8 +2,10 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
+  const router = useRouter();
   return (
     <div className="bg-gray-100 text-gray-800">
       {/* Hero Section */}
@@ -22,7 +24,7 @@ const HeroSection = () => {
             experience.
           </p>
           <motion.button
-            
+            onClick={() => router.push("/admissions")}
             whileHover={{ scale: 1.1 }}
             className="mt-6 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg"
           >
