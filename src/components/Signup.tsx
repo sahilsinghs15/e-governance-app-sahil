@@ -7,9 +7,6 @@ import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -44,29 +41,33 @@ const Signup = () => {
       setLoading(true); // Show spinner
       toast.loading("Signing up...");
 
-      const response = await axios.post(`${BACKEND_URL}/api/auth/signup`, {
-        username: usernameRef.current,
-        email: emailRef.current,
-        password: passwordRef.current,
+      const response = await fetch(`/api/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: usernameRef.current,
+          email: emailRef.current,
+          password: passwordRef.current,
+        }),
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         toast.dismiss();
         toast.success("Signup successful! Redirecting...");
         setTimeout(() => {
           router.push("/home"); // Redirect to home page
         }, 1500);
       } else {
+        const errorData = await response.json();
         toast.dismiss();
-        toast.error(response.data.error || "Signup failed. Please try again.");
+        toast.error(errorData.error || "Signup failed. Please try again.");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Signup error:", error);
       toast.dismiss();
-      const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred. Please try again later.";
-      toast.error(errorMessage);
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setLoading(false); // Hide spinner
     }
@@ -278,6 +279,5 @@ const Signup = () => {
     </section>
   );
 };
-
 
 export default Signup;
