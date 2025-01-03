@@ -8,10 +8,12 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
     const session = await getServerSession();
+    
 
     if (!session?.user) {
       return redirect("/signin");
     }
+    const username = session?.user?.username;
 
   return (
     <div className="bg-[#100c14] min-h-screen flex">
@@ -26,8 +28,8 @@ export default async function Home() {
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold capitalize tracking-tighter md:text-4xl text-white p-3 ">
-            <Greeting /> Piyush
-            {/* {session.user.name} */}
+            <Greeting /> 
+          {username}
           </h1>
         </div>
 

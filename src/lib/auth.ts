@@ -11,12 +11,13 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
+        username : { label : "Username" , type : "text"},
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Missing email or password");
+        if (!credentials?.username ||!credentials?.email || !credentials?.password) {
+          throw new Error("Missing username , email or password");
         }
 
         await connectToDB();
@@ -33,7 +34,7 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        return { id: student._id, email: student.email, name: student.name };
+        return { id: student._id, email: student.email, username: student.username };
       },
     }),
   ],

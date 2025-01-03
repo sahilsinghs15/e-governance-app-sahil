@@ -5,9 +5,9 @@ import { connectToDB } from "@/db/mongo";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { username , email, password } = await req.json();
 
-    if (!email || !password) {
+    if (!username ||!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
         { status: 400 }
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new Student({ email, password: hashedPassword });
+    const newUser = new Student({ username , email, password: hashedPassword });
     await newUser.save();
 
     return NextResponse.json(

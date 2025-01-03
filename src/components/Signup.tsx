@@ -7,21 +7,22 @@ import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
-    useState(false);
   const [requiredError, setRequiredError] = useState({
+    usernameReq: false,
     emailReq: false,
     passReq: false,
-    confirmPassReq: false,
   });
   const [loading, setLoading] = useState(false); // State to manage loading spinner
 
   const emailRef = useRef<string>("");
   const passwordRef = useRef<string>("");
-  const confirmPasswordRef = useRef<string>("");
+  const usernameRef = useRef<string>("");
 
   const router = useRouter(); // For redirection
 
@@ -29,26 +30,13 @@ const Signup = () => {
     e?.preventDefault();
 
     // Basic validation
-    if (
-      !emailRef.current ||
-      !passwordRef.current ||
-      !confirmPasswordRef.current
-    ) {
+    if (!emailRef.current || !passwordRef.current || !usernameRef.current) {
       setRequiredError({
         emailReq: !emailRef.current,
         passReq: !passwordRef.current,
-        confirmPassReq: !confirmPasswordRef.current,
+        usernameReq: !usernameRef.current,
       });
       toast.error("All fields are required");
-      return;
-    }
-
-    if (passwordRef.current !== confirmPasswordRef.current) {
-      setRequiredError((prevState) => ({
-        ...prevState,
-        confirmPassReq: true,
-      }));
-      toast.error("Passwords do not match");
       return;
     }
 
@@ -56,37 +44,33 @@ const Signup = () => {
       setLoading(true); // Show spinner
       toast.loading("Signing up...");
 
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: emailRef.current,
-          password: passwordRef.current,
-        }),
+      const response = await axios.post(`${BACKEND_URL}/api/auth/signup`, {
+        username: usernameRef.current,
+        email: emailRef.current,
+        password: passwordRef.current,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         toast.dismiss();
         toast.success("Signup successful! Redirecting...");
         setTimeout(() => {
           router.push("/home"); // Redirect to home page
         }, 1500);
       } else {
-        const data = await response.json();
         toast.dismiss();
-        toast.error(data.error || "Signup failed. Please try again.");
+        toast.error(response.data.error || "Signup failed. Please try again.");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup error:", error);
       toast.dismiss();
-      toast.error("An error occurred. Please try again later.");
+      const errorMessage =
+        error.response?.data?.error ||
+        "An error occurred. Please try again later.";
+      toast.error(errorMessage);
     } finally {
       setLoading(false); // Hide spinner
     }
   };
-
   return (
     <section className="wrapper relative flex min-h-screen items-center justify-center overflow-hidden antialiased">
       <motion.div
@@ -114,6 +98,23 @@ const Signup = () => {
         <div className="flex flex-col gap-8">
           <div className="grid w-full items-center gap-4">
             <div className="relative flex flex-col gap-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                name="username"
+                id="username"
+                className="focus:ring-none border-none bg-primary/5 focus:outline-none"
+                placeholder="Piyush..."
+                onChange={(e) => {
+                  usernameRef.current = e.target.value;
+                  setRequiredError((prevState) => ({
+                    ...prevState,
+                    usernameReq: false,
+                  }));
+                }}
+              />
+              {requiredError.usernameReq && (
+                <span className="text-red-500">Email is required</span>
+              )}
               <Label htmlFor="email">Email</Label>
               <Input
                 name="email"
@@ -195,7 +196,7 @@ const Signup = () => {
                 <span className="text-red-500">Password is required</span>
               )}
             </div>
-            <div className="relative flex flex-col gap-2">
+            {/* <div className="relative flex flex-col gap-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="flex">
                 <Input
@@ -216,7 +217,7 @@ const Signup = () => {
                   onClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
                   className="absolute bottom-0 right-0 flex h-10 items-center px-4 text-neutral-500"
                 >
-                  {isConfirmPasswordVisible  ? (
+                  {isConfirmPasswordVisible ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -257,16 +258,14 @@ const Signup = () => {
               {requiredError.confirmPassReq && (
                 <span className="text-red-500">Passwords do not match</span>
               )}
-            </div>
+            </div> */}
           </div>
           <Button
             size={"lg"}
             variant={"outline"}
             disabled={
-              loading ||
-              !emailRef.current ||
-              !passwordRef.current ||
-              !confirmPasswordRef.current
+              loading || !emailRef.current || !passwordRef.current
+              // !confirmPasswordRef.current
             }
             onClick={handleSubmit}
             className="hover:cursor-pointer"

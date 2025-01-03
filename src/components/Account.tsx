@@ -16,15 +16,13 @@ const Account = () => {
 
   const handleLogout = async () => {
     try {
-      // Display a success toast message
-      toast.success("Logged out successfully!");
-
-      // Perform sign out using next-auth
+      
       await signOut({
-        callbackUrl: "/signin", // Redirects the user to the signin page after logout
+        callbackUrl: "/signin", 
       });
+      toast.success("Logged out successfully!");
     } catch (error) {
-      // Handle logout errors if any
+
       toast.error("Failed to log out. Please try again.");
     }
   };
