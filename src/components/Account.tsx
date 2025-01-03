@@ -29,10 +29,11 @@ const Account = () => {
     }
   };
 
-  const walletHandler = () => {
+  const walletHandler =  () => {
+    router.push("/wallet");
     toast.success("Opened wallet");
     // <Redirect to="/wallet"/>
-    router.push("/wallet")
+
   }
 
   return (

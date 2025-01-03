@@ -1,24 +1,24 @@
 import { Appbar } from "@/components/Appbar";
+import { Footer } from "@/components/Footer";
 import { Greeting } from "@/components/Greeting";
-import Sidebar from "@/components/Sidebar";
+// import Sidebar from "@/components/Sidebar";
 
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  //   const session = await getServerSession();
+    const session = await getServerSession();
 
-  //   if (!session?.user) {
-  //     return <Redirect to={"/signin"} />;
-  //   }
+    if (!session?.user) {
+      return redirect("/signin");
+    }
 
   return (
     <div className="bg-[#100c14] min-h-screen flex">
-      {/* Sidebar */}
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col gap-6 mt-3">
-
         <div className="w-full">
           <Appbar />
         </div>
@@ -34,8 +34,9 @@ export default async function Home() {
         {/* Content Area */}
         <div className="flex-1 flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-md pl-3 ml-3">
           {/* Add your main content here */}
-          <p className="text-gray-700">This is your  page content.</p>
+          <p className="text-gray-700">This is your page content.</p>
         </div>
+        <Footer />
       </main>
     </div>
   );
