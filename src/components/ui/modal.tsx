@@ -297,7 +297,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 file:rounded-md file:border-0
                 file:bg-blue-500 file:text-white
                 hover:file:bg-blue-600 
-                border border-gray-700/50 rounded-md focus:outline-none text-gray-800 focus:ring-2 focus:ring-blue-500"
+                border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}
             />
             {errors.marksheet && (
