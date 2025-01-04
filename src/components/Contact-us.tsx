@@ -40,17 +40,16 @@ export default function ContactUS() {
             <div className="bg-gray-800 rounded-lg shadow-lg p-6 text-white">
               <h2 className="text-2xl font-semibold mb-4">Reach Us</h2>
               <p className="mb-4">
-                <strong>Bhavan's College</strong>
-                <br /> JP Rd, Old D N Nagar, Munshi Nagar,
-                <br /> Andheri West, Mumbai, Maharashtra 400058
+                <strong>E-Governance</strong>
+                <br /> Andheri East, Mumbai, Maharashtra 400093
               </p>
               <p className="mb-4">
                 <strong>Contact Us:</strong>
-                <br /> Mobile No: 9321000534
+                <br /> Mobile No: 1234567890
               </p>
               <p>
                 <strong>Write To Us:</strong>
-                <br /> info@bhavans.ac.in
+                <br /> info@e-governance.ac.in
               </p>
             </div>
           </div>
