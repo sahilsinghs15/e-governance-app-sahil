@@ -1,9 +1,8 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { Student } from "@/models/Student";
+import { User } from "@/models/User"; // Updated model import
 import { connectToDB } from "@/db/mongo";
-import JWT from "next-auth/jwt"; // Import JWT utilities
 
 export const authOptions: AuthOptions = {
   session: { strategy: "jwt" },
@@ -11,44 +10,43 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (
-          !credentials?.username ||
-          !credentials?.email ||
-          !credentials?.password
-        ) {
-          throw new Error("Missing username, email, or password");
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Missing email or password");
         }
 
         await connectToDB();
-        const student = await Student.findOne({
-          email: credentials.email,
-          username: credentials.username,
-        });
+        const user = await User.findOne({ email: credentials.email });
 
-        if (!student) {
-          throw new Error(
-            "No user found with the provided email and username combination"
-          );
+        if (!user) {
+          throw new Error("No user found with the provided email");
         }
 
         const isValidPassword = await bcrypt.compare(
           credentials.password,
-          student.password
+          user.password
         );
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
 
-        // Return the user object (including their id and email) to be used by JWT
+        // Log user details
+        console.log("User authenticated:", {
+          id: user._id.toString(),
+          email: user.email,
+          username: user.username,
+          role: user.role,
+        });
+
+        // Return user object to be used by the JWT callback
         return {
-          id: student._id.toString(),
-          email: student.email,
-          username: student.username,
+          id: user._id.toString(),
+          email: user.email,
+          username: user.username || null,
+          role: user.role || "user", // Default to "user" if role is undefined
         };
       },
     }),
@@ -56,21 +54,30 @@ export const authOptions: AuthOptions = {
   pages: { signIn: "/signin", error: "/signin" },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    // Here we will generate a JWT after a successful sign-in
     async jwt({ token, user }) {
       if (user) {
-        // Add user information to the token
-        token.id = user.id as string; // Ensure id is typed correctly as a string
-        token.email = user.email as string | null; // Ensure email is typed as string or null
-        token.username = user.username as string | null; // Ensure username is typed as string or null
+        token.id = user.id; // No type issue; user.id is always a string
+        token.email = user.email ?? null; // Ensure null for undefined
+        //@ts-ignore
+        
+        token.username = user.username ?? null; // Ensure null for undefined
+        //@ts-ignore
+        
+        token.role = user.role ?? "user"; 
       }
-      return token; // Return the token (which will contain the JWT)
+
+      console.log("Generated JWT:", token); 
+      return token;
     },
-    // Optional: Add a callback to handle session if needed
     async session({ session, token }) {
-      session.user.id = token.id as string;
-      session.user.email = token.email as string | null; // Ensure it's string or null
-      session.user.username = token.username as string | null; // Ensure it's string or null
+      session.user = {
+        id: token.id as string, 
+        email: token.email ?? null, 
+        //@ts-ignore
+        username: token.username ?? null, 
+        role: token.role as string
+      };
+
       return session;
     },
   },

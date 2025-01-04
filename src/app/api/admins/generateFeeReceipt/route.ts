@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Student } from "@/models/Student";
+import { Student } from "@/models/User";
 import { connectToDB } from "@/db/mongo";
 
 export async function POST(req: Request) {

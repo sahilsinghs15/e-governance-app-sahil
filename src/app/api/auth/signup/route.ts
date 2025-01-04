@@ -1,22 +1,24 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { Student } from "@/models/Student";
+import { User } from "@/models/User";
 import { connectToDB } from "@/db/mongo";
 
 export async function POST(req: Request) {
   try {
-    const { username , email, password } = await req.json();
+    const { username, email, password, role } = await req.json();
 
-    if (!username ||!email || !password) {
+    // Validate required fields
+    if (!username || !email || !password) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "Username, email, and password are required" },
         { status: 400 }
       );
     }
 
     await connectToDB();
 
-    const existingUser = await Student.findOne({ email });
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { error: "User already exists" },
@@ -24,9 +26,16 @@ export async function POST(req: Request) {
       );
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new Student({ username , email, password: hashedPassword });
+    // Create a new user with the role defaulting to 'student'
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      role: role || "student", // Default to "student" if role is not provided
+    });
     await newUser.save();
 
     return NextResponse.json(
@@ -34,7 +43,7 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error during user creation:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
