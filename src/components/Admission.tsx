@@ -29,7 +29,9 @@ const AdmissionsPage = () => {
       </section>
 
       {/* Open Modal */}
-      <Modal isOpen={isModalOpen} onClose={toggleModal} />
+      <div className="">
+        <Modal isOpen={isModalOpen} onClose={toggleModal} />
+      </div>
     </div>
   );
 };

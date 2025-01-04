@@ -24,7 +24,7 @@ const HeroSection = () => {
             experience.
           </p>
           <motion.button
-            onClick={() => router.push("/admissions")}
+            onClick={() => router.push("/admission")}
             whileHover={{ scale: 1.1 }}
             className="mt-6 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg"
           >

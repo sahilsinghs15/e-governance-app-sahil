@@ -17,15 +17,16 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     phone: "",
     dob: "",
     gender: "",
+    course: "",
     marksheet: null as File | null,
   });
-
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     phone: "",
     dob: "",
     gender: "",
+    course: "",
     marksheet: "",
   });
 
@@ -39,8 +40,29 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
+
+    if (file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!allowedTypes.includes(file.type)) {
+        setErrors({
+          ...errors,
+          marksheet: "Only JPEG, PNG, and JPG files are allowed.",
+        });
+        setFormData({ ...formData, marksheet: null });
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        setErrors({
+          ...errors,
+          marksheet: "File size should not exceed 10 MB.",
+        });
+        setFormData({ ...formData, marksheet: null });
+        return;
+      }
+    }
+
     setFormData({ ...formData, marksheet: file });
-    setErrors({ ...errors, marksheet: "" }); // Clear error on file selection
+    setErrors({ ...errors, marksheet: "" }); // Clear error on valid file selection
   };
 
   const validateForm = () => {
@@ -51,9 +73,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       phone: "",
       dob: "",
       gender: "",
+      course: "",
       marksheet: "",
     };
-
     if (!formData.name) {
       newErrors.name = "Name is required.";
       valid = false;
@@ -77,11 +99,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       newErrors.gender = "Gender is required.";
       valid = false;
     }
+    if (!formData.course) {
+      newErrors.course = "Course selection is required.";
+      valid = false;
+    }
     if (!formData.marksheet) {
       newErrors.marksheet = "12th Grade Marksheet is required.";
       valid = false;
     }
-
     setErrors(newErrors);
     return valid;
   };
@@ -102,10 +127,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     !formData.phone ||
     !formData.dob ||
     !formData.gender ||
+    !formData.course ||
     !formData.marksheet;
 
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
@@ -116,7 +141,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         >
           <X className="h-6 w-6" />
         </button>
-
         <h2 className="text-2xl font-bold mb-4 text-black">
           Student Registration
         </h2>
@@ -143,7 +167,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-red-500 mt-1">{errors.name}</p>
             )}
           </div>
-
           {/* Email */}
           <div className="mb-4">
             <label
@@ -166,7 +189,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
-
           {/* Phone Number */}
           <div className="mb-4">
             <label
@@ -189,7 +211,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
             )}
           </div>
-
           {/* Date of Birth */}
           <div className="mb-4">
             <label
@@ -211,7 +232,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-red-500 mt-1">{errors.dob}</p>
             )}
           </div>
-
           {/* Gender */}
           <div className="mb-4">
             <label
@@ -237,7 +257,30 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <p className="text-sm text-red-500 mt-1">{errors.gender}</p>
             )}
           </div>
-
+          <div className="mb-4">
+            <label
+              htmlFor="course"
+              className="block text-sm font-medium text-black"
+            >
+              Course
+            </label>
+            <select
+              id="course"
+              className={`w-full mt-1 p-2 border border-gray-700/50 rounded-md focus:outline-none text-gray-800 focus:ring-2 focus:ring-blue-500 ${
+                errors.course ? "border-red-500" : ""
+              }`}
+              value={formData.course}
+              onChange={handleInputChange}
+            >
+              <option value="">Select your course</option>
+              <option value="it">Information Technology</option>
+              <option value="ds">Data Science</option>
+              <option value="cs">Computer Science</option>
+            </select>
+            {errors.course && (
+              <p className="text-sm text-red-500 mt-1">{errors.course}</p>
+            )}
+          </div>
           {/* Upload Marksheet */}
           <div className="mb-4">
             <label
@@ -254,14 +297,13 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 file:rounded-md file:border-0
                 file:bg-blue-500 file:text-white
                 hover:file:bg-blue-600 
-                border border-gray-700/50 rounded-md focus:outline-none  focus:ring-2 focus:ring-blue-500"
+                border border-gray-700/50 rounded-md focus:outline-none text-gray-800 focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}
             />
             {errors.marksheet && (
               <p className="text-sm text-red-500 mt-1">{errors.marksheet}</p>
             )}
           </div>
-
           {/* Submit Button */}
           <div className="flex justify-end">
             <Button
