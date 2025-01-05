@@ -4,29 +4,41 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+const MotionCard = ({ icon, title }: { icon?: string; title: string }) => (
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    className="bg-gradient-to-b from-blue-50 to-blue-100 p-6 rounded-xl shadow-lg text-center border border-blue-200 hover:border-blue-400 transition-all"
+  >
+    {icon && <div className="text-5xl mb-4">{icon}</div>}
+    <p className="font-medium text-gray-700">{title}</p>
+  </motion.div>
+);
+
 const HeroSection = () => {
   const router = useRouter();
+
   return (
-    <div className="bg-gray-100 text-gray-800">
+    <div className="bg-gray-50 text-gray-800">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-500 to-purple-600 text-white p-10">
+      <section className="relative bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-500 text-white py-16 px-4 sm:py-20 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="container mx-auto text-center"
+          className="container mx-auto text-center max-w-4xl"
         >
-          <h1 className="text-4xl font-bold">
-            Welcome to E-Governance Platform
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+            Welcome to the <span className="text-yellow-300">E-Governance</span>{" "}
+            Platform
           </h1>
-          <p className="mt-4 text-lg">
-            Streamlining admissions and course management for a seamless
-            experience.
+          <p className="mt-6 text-lg sm:text-xl lg:text-2xl leading-relaxed">
+            Empowering institutions with efficient admissions, academics, and
+            resources management for a seamless experience.
           </p>
           <motion.button
             onClick={() => router.push("/admission")}
             whileHover={{ scale: 1.1 }}
-            className="mt-6 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg"
+            className="mt-8 px-8 py-4 bg-yellow-300 text-gray-800 font-semibold rounded-full shadow-lg hover:bg-yellow-400 transition-all"
           >
             Get Started
           </motion.button>
@@ -34,39 +46,35 @@ const HeroSection = () => {
       </section>
 
       {/* Admissions Section */}
-      <section className="py-10">
+      <section className="py-12 px-4 sm:px-10">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-8">
+          <h2 className="text-3xl font-bold text-center text-blue-600 mb-8">
             Admissions
           </h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6"
           >
             {["FY", "SY", "TY", "PG 1", "PG 2"].map((year, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-4 rounded-lg shadow-md text-center"
-              >
-                {year}
-              </motion.div>
+              <MotionCard key={index} title={year} />
             ))}
           </motion.div>
         </div>
       </section>
 
       {/* Academics Section */}
-      <section className="py-10 bg-gray-200">
+      <section className="py-12 px-4 sm:px-10 bg-gradient-to-r from-gray-50 to-gray-100">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-8">Academics</h2>
+          <h2 className="text-3xl font-bold text-center text-purple-600 mb-8">
+            Academics
+          </h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
           >
             {[
               { name: "UG Program", icon: "🎓" },
@@ -78,30 +86,27 @@ const HeroSection = () => {
               { name: "Prospectus", icon: "📖" },
               { name: "Examination", icon: "📝" },
             ].map((academic, index) => (
-              <motion.div
+              <MotionCard
                 key={index}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-4 rounded-lg shadow-md text-center"
-              >
-                <div className="text-4xl">{academic.icon}</div>
-                <p className="mt-2 font-medium">{academic.name}</p>
-              </motion.div>
+                title={academic.name}
+                icon={academic.icon}
+              />
             ))}
           </motion.div>
         </div>
       </section>
 
       {/* Facilities Section */}
-      <section className="py-10">
+      <section className="py-12 px-4 sm:px-10">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-8">
+          <h2 className="text-3xl font-bold text-center text-green-600 mb-8">
             Facilities & Resources
           </h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-3 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
           >
             {[
               "Laboratories",
@@ -113,29 +118,23 @@ const HeroSection = () => {
               "N.C.C.",
               "N.S.S.",
             ].map((facility, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-4 rounded-lg shadow-md text-center"
-              >
-                <p className="font-medium">{facility}</p>
-              </motion.div>
+              <MotionCard key={index} title={facility} />
             ))}
           </motion.div>
         </div>
       </section>
 
       {/* Facts Section */}
-      <section className="py-10 bg-gray-200">
+      <section className="py-12 px-4 sm:px-10 bg-gradient-to-r from-yellow-100 to-yellow-200">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold text-center mb-8">
+          <h2 className="text-3xl font-bold text-center text-yellow-600 mb-8">
             Proud Facts
           </h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-6 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6"
           >
             {[
               "Total Departments",
@@ -148,9 +147,9 @@ const HeroSection = () => {
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.05 }}
-                className="bg-yellow-400 p-4 rounded-lg text-center"
+                className="bg-yellow-300 p-6 rounded-xl text-center shadow-lg hover:shadow-2xl transition-all"
               >
-                <p className="font-medium">{fact}</p>
+                <p className="font-medium text-gray-800">{fact}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -159,4 +158,5 @@ const HeroSection = () => {
     </div>
   );
 };
+
 export default HeroSection;

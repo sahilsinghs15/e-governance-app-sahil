@@ -22,7 +22,7 @@ export default async function Home() {
  
         {/* Page Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-extrabold capitalize tracking-tighter md:text-4xl text-white p-3 ">
+          <h1 className="text-3xl font-extrabold capitalize tracking-tighter md:text-4xl text-white p-3 pl-6">
             <Greeting /> 
 
           </h1>

@@ -29,7 +29,7 @@ const StudentAppbar = () => {
             className="h-6 sm:h-8"
             alt="E-Governance"
           />
-          <h2 className="hidden sm:block flex-wrap">E-Governance</h2>
+          <h2 className="hidden sm:block ">E-Governance</h2>
         </div>
 
         {/* Navigation Links for Desktop */}

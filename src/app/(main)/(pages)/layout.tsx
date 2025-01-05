@@ -9,7 +9,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full pt-4 pb-3">
+    <div className="w-full ">
       <Appbar />
       {children}
       <Footer />
