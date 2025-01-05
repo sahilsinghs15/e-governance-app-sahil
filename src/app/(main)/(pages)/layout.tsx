@@ -5,7 +5,6 @@ import { Footer } from "@/components/Footer";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,14 +19,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>{/* Add metadata here if needed */}</head>
       <body className={inter.className}>
         <div className="w-full pt-4 pb-3">
           <Appbar />
         </div>
         {children}
         <Footer />
+        {/* Move Toaster inside the body */}
+        <Toaster />
       </body>
-      <Toaster/>
     </html>
   );
 }

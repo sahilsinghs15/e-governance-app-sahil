@@ -1,5 +1,6 @@
 // src/types/next-auth.d.ts
 import "next-auth";
+import { getServerSession } from "next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -9,7 +10,10 @@ declare module "next-auth" {
       username: string | null;
       role: string;
     };
+    
   }
+
+ 
   interface JWT {
     id: string;
     email: string | null;

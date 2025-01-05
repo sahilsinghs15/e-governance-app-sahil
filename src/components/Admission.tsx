@@ -3,11 +3,14 @@
 import React, { useState } from "react";
 import { Modal } from "./ui/modal";
 
+
 const AdmissionsPage = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  
   };
 
   return (

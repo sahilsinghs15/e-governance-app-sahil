@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { Student } from "@/models/User";
+
 import { connectToDB } from "@/db/mongo";
+import Student_Registration from "@/models/Student_Registration";
 
 export async function POST(req: Request) {
   const { studentId, amount, description } = await req.json();
@@ -15,7 +16,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const student = await Student.findById(studentId);
+    const student = await Student_Registration.findById(studentId);
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }

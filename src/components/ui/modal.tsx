@@ -4,6 +4,7 @@ import { Button } from "./button";
 import { X } from "lucide-react"; // You can use Lucide Icons or any preferred library
 import toast from "react-hot-toast"; // Make sure to install react-hot-toast
 import { Input } from "./input";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     course: "",
     marksheet: "",
   });
-
+  const router = useRouter();
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -120,6 +121,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       toast.error("Please fill out all required fields.");
     }
   };
+
+  const handleSubmission = () => {
+    const reponse = fetch("/api/")
+  }
 
   const isFormIncomplete =
     !formData.name ||
@@ -311,7 +316,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               variant="default"
               size="sm"
               disabled={isFormIncomplete}
-              className="bg-green-400" // Disable button if form is incomplete
+              className="bg-green-400" 
+              onClick={handleSubmission}// Disable button if form is incomplete
             >
               Submit
             </Button>
