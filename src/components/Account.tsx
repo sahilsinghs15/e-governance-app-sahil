@@ -39,7 +39,8 @@ const Account = () => {
     <div className="relative">
       {/* Profile Picture */}
       <div
-        className="w-12 h-12 rounded-full bg-gray-300 cursor-pointer overflow-hidden border-2 border-gray-400"
+        className="rounded-full bg-gray-300 cursor-pointer overflow-hidden border-2 border-gray-400 transition-all duration-200 
+                   w-8 h-8 sm:w-10 sm:h-10 "
         onClick={menuToggle}
       >
         <img
@@ -51,7 +52,9 @@ const Account = () => {
 
       {/* Dropdown Menu */}
       {openMenu && (
-        <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2">
+        <div
+          className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50" // z-50 ensures the menu stays above everything
+        >
           {/* Wallet Option */}
           <button
             className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"
