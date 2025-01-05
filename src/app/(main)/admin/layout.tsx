@@ -1,7 +1,9 @@
 // app/layout.tsx
 
-import { Appbar } from "@/components/Appbar";
+
+import Appbar from "@/components/Appbar";
 import { Footer } from "@/components/Footer";
+import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
@@ -13,8 +15,11 @@ export default function Layout({
 }) {
   return (
     <div className="w-full pt-4 pb-3">
-      <Appbar />
-      {children}
+      
+      <SessionProviderWrapper>
+        <Appbar />
+        {children}
+      </SessionProviderWrapper>
       <Footer />
       {/* Move Toaster inside the body */}
       <Toaster />
