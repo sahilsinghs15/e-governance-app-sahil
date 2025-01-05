@@ -1,84 +1,120 @@
-"use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Account from "./Account";
 
 const StudentAppbar = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   const routerHandler = (path: string) => {
     router.push(path);
+    closeMenu();
   };
 
   return (
-    <div className="h-12 w-full flex items-center justify-between border-b border-gray-600 pl-10 pr-10 pb-2">
-      <div
-        className="bg-gradient-to-b text-2xl pl-4 from-blue-400 to-blue-700 bg-clip-text pr-1 font-black flex justify-center items-center gap-2 tracking-tighter text-transparent hover:cursor-pointer"
-        onClick={() => routerHandler("/")}
-      >
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          className="h-8"
-          alt="E-Governance"
-        />
-        <h2>E-Governance</h2>
-      </div>
+    <div className="relative">
+      {/* AppBar */}
+      <div className="h-16 w-full flex items-center justify-between border-b border-gray-600 px-4 sm:px-10 bg-gray-900">
+        {/* Logo Section */}
+        <div
+          className="text-xl sm:text-2xl font-bold flex items-center gap-2 cursor-pointer text-blue-500"
+          onClick={() => routerHandler("/")}
+        >
+          <img
+            src="https://flowbite.com/docs/images/logo.svg"
+            className="h-6 sm:h-8"
+            alt="E-Governance"
+          />
+          <h2 className="hidden sm:block flex-wrap">E-Governance</h2>
+        </div>
 
-      <div className="text-white flex justify-evenly items-center gap-6">
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/home")}
-        >
-          Home
+        {/* Navigation Links for Desktop */}
+        <div className="hidden md:flex text-white gap-6 text-sm sm:text-base font-medium">
+          {[
+            "Home",
+            "Admission",
+            "Academics",
+            "Programs",
+            "Department",
+            "Students",
+            "Contact Us",
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="cursor-pointer hover:underline"
+              onClick={() =>
+                routerHandler(`/${item.toLowerCase().replace(" ", "-")}`)
+              }
+            >
+              {item}
+            </div>
+          ))}
         </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/admission")}
-        >
-          Admission
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/academics")}
-        >
-          Academics
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/programs")}
-        >
-          Programs
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/department")}
-        >
-          Department
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/student")}
-        >
-          Students
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/contact-us")}
-        >
-          Contact Us
-        </div>
-      </div>
 
-      <div className="flex justify-center items-center gap-5">
-        <div className="m-3">
+        {/* Account and Hamburger Menu */}
+        <div className="flex items-center gap-4 pr-4">
           <Account />
+
+          {/* Hamburger Menu */}
+          <button
+            className="block md:hidden text-white focus:outline-none"
+            onClick={toggleMenu}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
         </div>
       </div>
+
+      {/* Overlay and Mobile Menu */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={closeMenu} // Close menu when clicking anywhere outside
+        >
+          {/* Mobile Menu */}
+          <div
+            className="absolute top-16 right-4 w-auto max-w-xs bg-gray-800 text-white flex flex-col gap-2 px-4 py-3 rounded-lg shadow-lg z-50"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the menu
+          >
+            {[
+              "Home",
+              "Admission",
+              "Academics",
+              "Programs",
+              "Department",
+              "Students",
+              "Contact Us",
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="cursor-pointer hover:underline"
+                onClick={() =>
+                  routerHandler(`/${item.toLowerCase().replace(" ", "-")}`)
+                }
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
