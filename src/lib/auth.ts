@@ -1,7 +1,7 @@
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { User } from "@/models/User"; // Updated model import
+import User from "@/models/User";
 import { connectToDB } from "@/db/mongo";
 
 export const authOptions: AuthOptions = {
@@ -58,24 +58,27 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id; // No type issue; user.id is always a string
         token.email = user.email ?? null; // Ensure null for undefined
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        
+
         token.username = user.username ?? null; // Ensure null for undefined
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        
-        token.role = user.role ?? "user"; 
+
+        token.role = user.role ?? "user";
       }
 
-      console.log("Generated JWT:", token); 
+      console.log("Generated JWT:", token);
       return token;
     },
     async session({ session, token }) {
       session.user = {
-        id: token.id as string, 
-        email: token.email ?? null, 
+        id: token.id as string,
+        email: token.email ?? null,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        username: token.username ?? null, 
-        role: token.role as string
+        username: token.username ?? null,
+        role: token.role as string,
       };
 
       return session;

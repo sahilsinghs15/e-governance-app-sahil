@@ -20,3 +20,5 @@ const PaymentWalletSchema: Schema = new Schema({
 
 export default mongoose.models.PaymentWallet ||
   mongoose.model<IPaymentWallet>("PaymentWallet", PaymentWalletSchema);
+
+//Wallet logic

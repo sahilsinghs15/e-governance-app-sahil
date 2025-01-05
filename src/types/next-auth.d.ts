@@ -12,6 +12,13 @@ declare module "next-auth" {
     };
     
   }
+  interface StudentData {
+    admitted: boolean;
+    // Add other properties as needed
+    name?: string;
+    email?: string;
+    course?: string;
+  }
 
  
   interface JWT {

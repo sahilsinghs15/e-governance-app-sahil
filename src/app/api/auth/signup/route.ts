@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { User } from "@/models/User";
+import User from "@/models/User";
 import { connectToDB } from "@/db/mongo";
 
 export async function POST(req: Request) {
   try {
-    const { username, email, password, role } = await req.json();
+    const { username, email, password } = await req.json();
 
     // Validate required fields
     if (!username || !email || !password) {
@@ -34,14 +34,13 @@ export async function POST(req: Request) {
       username,
       email,
       password: hashedPassword,
-      role: role || "student", // Default to "student" if role is not provided
     });
     await newUser.save();
 
-    return NextResponse.json(
-      { message: "User created successfully" },
-      { status: 201 }
-    );
+    return NextResponse.json({
+      message: "User created successfully",
+      newUser,
+    });
   } catch (error) {
     console.error("Error during user creation:", error);
     return NextResponse.json(

@@ -72,7 +72,6 @@ const Signin = () => {
           username : username.current,
           email: email.current,
           password: password.current,
-          redirect: false,
         });
 
         setLoading(false);

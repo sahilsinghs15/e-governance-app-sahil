@@ -1,29 +1,85 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IStudentR extends Document {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  dateOfBirth: Date;
-  gender: string;
-  course: string;
-  marksheet: string;
-  isVerified: boolean;
-  walletBalance: number;
+enum Gender {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
-const StudentRSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  phoneNumber: { type: String, required: true },
-  dateOfBirth: { type: Date, required: true },
-  gender: { type: String, required: true },
-  course: { type: String, required: true },
-  marksheet: { type: String, required: true },
-  isVerified: { type: Boolean, default: false },
-  walletBalance: { type: Number, default: 0 },
-});
+enum Course {
+  IT = "IT",
+  CS = "CS",
+  DS = "DS",
+}
 
-// Check if the model already exists in mongoose.models to prevent overwriting
-export default mongoose.models.StudentRegistration ||
-  mongoose.model<IStudentR>("StudentRegistration", StudentRSchema);
+export interface studentInterface extends Document {
+  userId: mongoose.Types.ObjectId;
+  name: string;
+  email: string;
+  phone: number;
+  dob: Date;
+  gender: Gender;
+  course: Course;
+  rollNo?: string;
+  admitted?: boolean;
+}
+
+// Define the Student Schema
+const studentSchema = new Schema<studentInterface>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    name: {
+      required: true,
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
+    },
+
+    phone: {
+      required: true,
+      type: Number,
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    gender: {
+      required: true,
+      type: String,
+      enum: Object.values(Gender),
+    },
+
+    course: {
+      required: true,
+      type: String,
+      enum: Object.values(Course),
+    },
+
+    rollNo: {
+      type: String,
+    },
+
+    admitted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Student =
+  mongoose.models.Student ||
+  mongoose.model<studentInterface>("Student", studentSchema);
+export default Student;
