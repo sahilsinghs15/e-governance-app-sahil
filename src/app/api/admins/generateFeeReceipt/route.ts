@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-
+import Student from "@/models/Student_Registration";
 import { connectToDB } from "@/db/mongo";
-import Student_Registration from "@/models/Student_Registration";
+import Receipt from "@/models/FeeReceipt";
+
 
 export async function POST(req: Request) {
-  const { studentId, amount, description } = await req.json();
-
   try {
     await connectToDB();
+    const { studentId, amount, description } = await req.json();
 
     if (!studentId || !amount || !description) {
       return NextResponse.json(
@@ -16,21 +16,18 @@ export async function POST(req: Request) {
       );
     }
 
-    const student = await Student_Registration.findById(studentId);
+    const student = await Student.findById(studentId);
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }
 
-    const feeReceipt = {
-      description,
+    const feeReciept = new Receipt({
+      studentId,
       amount,
-      date: new Date(),
-    };
+      description,
+    });
 
-    if (!student.feeReceipts) student.feeReceipts = [];
-    student.feeReceipts.push(feeReceipt);
-
-    await student.save();
+    await feeReciept.save();
 
     return NextResponse.json(
       { message: "Fee receipt generated successfully" },

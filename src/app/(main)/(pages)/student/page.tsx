@@ -1,9 +1,72 @@
+"use client";
+
+import { jsPDF } from "jspdf";
 import YourApplicationPage from "@/components/AdmissionCard";
 
+interface StudentDetails {
+  name: string;
+  email: string;
+  phone: number;
+  dob: string; // You can format this as a string for easier rendering
+  gender: string;
+  course: string;
+  rollNo?: string;
+  admitted?: boolean;
+}
+
 export default function Student() {
+  // Assuming you have the student's details here or fetched from the backend
+  const studentDetails: StudentDetails = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: 1234567890,
+    dob: "2000-01-01",
+    gender: "MALE",
+    course: "CS", // CS = Computer Science
+    rollNo: "CS12345",
+    admitted: true,
+  };
+
+  const handleDownloadPDF = () => {
+    // Initialize jsPDF
+    const doc = new jsPDF();
+
+    // Set title
+    doc.setFontSize(16);
+    doc.text("Student Application Details", 20, 20);
+
+    // Add student details dynamically
+    doc.setFontSize(12);
+    doc.text(`Name: ${studentDetails.name}`, 20, 30);
+    doc.text(`Email: ${studentDetails.email}`, 20, 40);
+    doc.text(`Phone: ${studentDetails.phone.toString()}`, 20, 50);
+    doc.text(`Date of Birth: ${studentDetails.dob}`, 20, 60);
+    doc.text(`Gender: ${studentDetails.gender}`, 20, 70);
+    doc.text(`Course: ${studentDetails.course}`, 20, 80);
+    doc.text(`Roll No: ${studentDetails.rollNo || "N/A"}`, 20, 90);
+    doc.text(`Admitted: ${studentDetails.admitted ? "Yes" : "No"}`, 20, 100);
+
+    // Important Notes
+    doc.text("Important Notes:", 20, 110);
+    doc.text(
+      "1. Ensure all your documents are submitted before the deadline.",
+      20,
+      120
+    );
+    doc.text("2. Track your application regularly for updates.", 20, 130);
+    doc.text(
+      "3. Contact the admissions office for any queries or assistance.",
+      20,
+      140
+    );
+
+    // Save the PDF
+    doc.save("student_application_details.pdf");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-900 via-indigo-800 to-purple-900 text-white flex items-center justify-center">
-      <div className="w-full max-w-2xl p-4 bg-white shadow-lg rounded-lg transform hover:scale-105 transition-transform duration-300">
+      <div className="w-full max-w-2xl p-4 bg-white shadow-lg rounded-lg transform m-4 transition-transform duration-300">
         <div className="text-center mb-4">
           <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight mb-2">
             Your Application Details
@@ -38,7 +101,10 @@ export default function Student() {
 
         {/* Footer */}
         <div className="mt-6 text-center">
-          <button className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300">
+          <button
+            onClick={handleDownloadPDF}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300"
+          >
             Download Application PDF
           </button>
         </div>

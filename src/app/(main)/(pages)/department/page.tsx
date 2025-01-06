@@ -2,12 +2,12 @@ export default function Department() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
       {/* Page Header */}
-      <header className="w-full bg-orange-600 p-6 text-center">
+      <header className="w-full bg-gradient-to-r from-orange-500 to-red-600 p-8 text-center">
         <h1 className="text-4xl font-extrabold capitalize tracking-tighter md:text-5xl">
           Department
         </h1>
         <p className="mt-2 text-lg md:text-xl">
-          Discover our specialized departments and their unique offerings
+          Explore our specialized departments and their unique offerings
         </p>
       </header>
 
@@ -19,9 +19,10 @@ export default function Department() {
             Overview
           </h2>
           <p className="text-gray-400">
-            Our college hosts various departments that excel in delivering
-            quality education and research. Each department focuses on providing
-            specialized knowledge and hands-on experience to empower students.
+            Our college is home to multiple departments that focus on providing
+            quality education, cutting-edge research opportunities, and
+            practical training. Each department is designed to equip students
+            with specialized knowledge and skills to excel in their careers.
           </p>
         </section>
 
@@ -30,63 +31,81 @@ export default function Department() {
           <h2 className="text-3xl font-semibold mb-4 border-b-2 border-orange-600 pb-2">
             Departments List
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-4 bg-gray-800 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold">Information Technology</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                <ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Department 1 */}
+            <div className="p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transform transition-all">
+              <h3 className="text-2xl font-bold text-orange-500">
+                Information Technology
+              </h3>
+              <p className="mt-4 text-sm text-gray-400">
+                <ul className="list-disc ml-4 space-y-2">
                   <li>
-                    Focuses on the practical applications of computers and
-                    software to solve business problems.
+                    Practical applications of computers and software to solve
+                    business problems.
                   </li>
+                  <li>Infrastructure, management, and security of networks.</li>
                   <li>
-                    Deals with the infrastructure, management, and security of
-                    computer systems and networks.
-                  </li>
-                  <li>
-                    Covers areas like networking, cybersecurity, database
-                    administration, and systems administration.
-                  </li>
-                </ul>
-              </p>
-            </div>
-            <div className="p-4 bg-gray-800 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold">Computer Science</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                <ul>
-                  <li>
-                    Explores the theoretical foundations of computing and the
-                    design of efficient algorithms and data structures.
-                  </li>
-                  <li>
-                    Deals with the mathematical and logical principles that
-                    underlie computer systems and software.
-                  </li>
-                  <li>
-                    Covers areas like programming languages, artificial
-                    intelligence, computer graphics, and software engineering.
+                    Areas covered: networking, cybersecurity, and database
+                    administration.
                   </li>
                 </ul>
               </p>
+              <p className="mt-4 text-lg text-gray-300 font-medium">
+                <span className="text-orange-500">Course Fee: </span>35,000 per
+                semester
+              </p>
             </div>
-            <div className="p-4 bg-gray-800 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold">Data Science</h3>
-              <p className="mt-2 text-sm text-gray-400">
-                <ul>
+
+            {/* Department 2 */}
+            <div className="p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transform transition-all">
+              <h3 className="text-2xl font-bold text-orange-500">
+                Computer Science
+              </h3>
+              <p className="mt-4 text-sm text-gray-400">
+                <ul className="list-disc ml-4 space-y-2">
                   <li>
-                    Uses scientific methods, algorithms, and systems to extract
-                    knowledge and insights from structured and unstructured
-                    data.
+                    Theoretical foundations of computing and efficient
+                    algorithms.
                   </li>
                   <li>
-                    involves collecting, cleaning, analyzing, and visualizing
-                    data to make informed decisions.
+                    Mathematical and logical principles underlying computer
+                    systems.
                   </li>
                   <li>
-                    Covers areas like machine learning, statistics, data mining,
-                    and big data analytics.
+                    Areas covered: programming, AI, computer graphics, and
+                    software engineering.
                   </li>
                 </ul>
+              </p>
+              <p className="mt-4 text-lg text-gray-300 font-medium">
+                <span className="text-orange-500">Course Fee: </span>40,000 per
+                semester
+              </p>
+            </div>
+
+            {/* Department 3 */}
+            <div className="p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transform transition-all">
+              <h3 className="text-2xl font-bold text-orange-500">
+                Data Science
+              </h3>
+              <p className="mt-4 text-sm text-gray-400">
+                <ul className="list-disc ml-4 space-y-2">
+                  <li>
+                    Uses algorithms and systems to extract knowledge from data.
+                  </li>
+                  <li>
+                    Focuses on data cleaning, analysis, and visualization for
+                    decision-making.
+                  </li>
+                  <li>
+                    Areas covered: machine learning, statistics, and big data
+                    analytics.
+                  </li>
+                </ul>
+              </p>
+              <p className="mt-4 text-lg text-gray-300 font-medium">
+                <span className="text-orange-500">Course Fee: </span>45,000 per
+                semester
               </p>
             </div>
           </div>
@@ -98,9 +117,10 @@ export default function Department() {
             Faculty
           </h2>
           <p className="text-gray-400">
-            Our faculty members are experienced professionals and researchers
-            who guide students toward achieving their academic and professional
-            goals.
+            Our faculty comprises experienced professors and researchers who are
+            dedicated to guiding students in achieving their academic and career
+            goals. With expertise in diverse fields, they bring cutting-edge
+            knowledge and practical insights to the classroom.
           </p>
         </section>
 
@@ -110,30 +130,26 @@ export default function Department() {
             Contact the Department
           </h2>
           <p className="text-gray-400 mb-6">
-            If you have any queries about a specific department, feel free to
-            reach out via email or phone. We are here to assist you.
+            For any queries about our departments, feel free to reach out to us
+            via email or phone. We're here to assist you.
           </p>
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="p-4 bg-gray-800 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold">Email</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Email */}
+            <div className="p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transform transition-all">
+              <h3 className="text-xl font-bold text-orange-500">Email</h3>
               <p className="mt-2 text-sm text-gray-400">
                 department@college.edu
               </p>
             </div>
-            <div className="p-4 bg-gray-800 rounded-lg shadow-md mt-4 md:mt-0">
-              <h3 className="text-xl font-bold">Phone</h3>
+
+            {/* Phone */}
+            <div className="p-6 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transform transition-all">
+              <h3 className="text-xl font-bold text-orange-500">Phone</h3>
               <p className="mt-2 text-sm text-gray-400">+1-234-567-890</p>
             </div>
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="w-full bg-orange-600 p-4 text-center mt-auto">
-        <p className="text-sm text-gray-300">
-          &copy; {new Date().getFullYear()} [College Name]. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 }

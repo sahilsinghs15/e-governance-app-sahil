@@ -7,6 +7,7 @@ import React, { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -260,6 +261,12 @@ const Signup = () => {
                 <span className="text-red-500">Passwords do not match</span>
               )}
             </div> */}
+            <div className="text-center text-sm text-white">
+              Already have an account?{" "}
+              <Link className="hover:underline " href="/signin">
+                Sign in
+              </Link>
+            </div>
           </div>
           <Button
             size={"lg"}

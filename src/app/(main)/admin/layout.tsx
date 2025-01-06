@@ -4,7 +4,7 @@
 import Appbar from "@/components/Appbar";
 import { Footer } from "@/components/Footer";
 import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
-import { Inter } from "next/font/google";
+
 import { Toaster } from "react-hot-toast";
 
 

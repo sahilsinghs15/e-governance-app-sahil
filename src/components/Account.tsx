@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaSignOutAlt, FaWallet, FaFileAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -8,6 +6,7 @@ import { signOut } from "next-auth/react";
 
 const Account = () => {
   const [openMenu, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null); // Set type for menuRef
   const router = useRouter();
 
   const menuToggle = () => {
@@ -25,7 +24,7 @@ const Account = () => {
     }
   };
 
-  const walletHandler = () => {
+  const walletHandler = async () => {
     router.push("/wallet");
     toast.success("Opened wallet");
   };
@@ -34,6 +33,19 @@ const Account = () => {
     router.push("/student");
     toast.success("Viewing your application!");
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside); // Use "mousedown" for better response
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="relative">
@@ -44,7 +56,7 @@ const Account = () => {
         onClick={menuToggle}
       >
         <img
-          // src="/profile-picture.jpg" // Replace with your dynamic profile picture URL
+          src="https://avatar.iran.liara.run/public/boy?username=${user}"
           alt="Profile"
           className="w-full h-full object-cover"
         />
@@ -53,7 +65,8 @@ const Account = () => {
       {/* Dropdown Menu */}
       {openMenu && (
         <div
-          className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50" // z-50 ensures the menu stays above everything
+          ref={menuRef} // Attach ref to menu container
+          className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50"
         >
           {/* Wallet Option */}
           <button
