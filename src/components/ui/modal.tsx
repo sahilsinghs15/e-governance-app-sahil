@@ -103,7 +103,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     return valid;
   };
 
-  const handleSubmission = async (event  :any) => {
+  const handleSubmission = async (event: any) => {
     event.preventDefault();
     const { name, email, phone, dob, gender, course } = formData;
 
@@ -139,8 +139,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="relative w-full max-w-lg bg-white rounded-lg shadow-lg p-6 sm:p-4 mt-14 mb-10">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -148,15 +148,15 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         >
           <X className="h-6 w-6" />
         </button>
-        <h2 className="text-2xl font-bold mb-4 text-black">
+        <h2 className="text-lg font-semibold mb-4 text-black">
           Student Registration
         </h2>
         <form onSubmit={handleSubmission}>
           {/* Student Name */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Name
             </label>
@@ -171,14 +171,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             />
             {errors.name && (
-              <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.name}</p>
             )}
           </div>
           {/* Email */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Email
             </label>
@@ -193,14 +193,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             />
             {errors.email && (
-              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
           {/* Phone Number */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="phone"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Phone Number
             </label>
@@ -215,14 +215,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             />
             {errors.phone && (
-              <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
             )}
           </div>
           {/* Date of Birth */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="dob"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Date of Birth
             </label>
@@ -236,14 +236,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             />
             {errors.dob && (
-              <p className="text-sm text-red-500 mt-1">{errors.dob}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.dob}</p>
             )}
           </div>
           {/* Gender */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="gender"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Gender
             </label>
@@ -261,13 +261,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <option value="other">Other</option>
             </select>
             {errors.gender && (
-              <p className="text-sm text-red-500 mt-1">{errors.gender}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
             )}
           </div>
-          <div className="mb-4">
+          {/* Course */}
+          <div className="mb-3">
             <label
               htmlFor="course"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               Course
             </label>
@@ -285,30 +286,25 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <option value="DS">Data Science</option>
             </select>
             {errors.course && (
-              <p className="text-sm text-red-500 mt-1">{errors.course}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.course}</p>
             )}
           </div>
           {/* Upload Marksheet */}
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="marksheet"
-              className="block text-sm font-medium text-black"
+              className="block text-xs font-medium text-black"
             >
               12th Grade Marksheet
             </label>
             <input
               id="marksheet"
               type="file"
-              className="mt-1 block w-full text-sm text-black
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:bg-blue-500 file:text-white
-                hover:file:bg-blue-600 
-                border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full text-xs text-black file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}
             />
             {errors.marksheet && (
-              <p className="text-sm text-red-500 mt-1">{errors.marksheet}</p>
+              <p className="text-xs text-red-500 mt-1">{errors.marksheet}</p>
             )}
           </div>
           {/* Submit Button */}
@@ -327,4 +323,5 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
+
 };
