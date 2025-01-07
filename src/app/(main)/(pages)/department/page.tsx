@@ -37,7 +37,7 @@ export default function Department() {
               <h3 className="text-2xl font-bold text-orange-500">
                 Information Technology
               </h3>
-              <p className="mt-4 text-sm text-gray-400">
+              <div className="mt-4 text-sm text-gray-400">
                 <ul className="list-disc ml-4 space-y-2">
                   <li>
                     Practical applications of computers and software to solve
@@ -49,7 +49,7 @@ export default function Department() {
                     administration.
                   </li>
                 </ul>
-              </p>
+              </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
                 <span className="text-orange-500">Course Fee: </span>35,000 per
                 semester
@@ -61,7 +61,7 @@ export default function Department() {
               <h3 className="text-2xl font-bold text-orange-500">
                 Computer Science
               </h3>
-              <p className="mt-4 text-sm text-gray-400">
+              <div className="mt-4 text-sm text-gray-400">
                 <ul className="list-disc ml-4 space-y-2">
                   <li>
                     Theoretical foundations of computing and efficient
@@ -76,7 +76,7 @@ export default function Department() {
                     software engineering.
                   </li>
                 </ul>
-              </p>
+              </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
                 <span className="text-orange-500">Course Fee: </span>40,000 per
                 semester
@@ -88,7 +88,7 @@ export default function Department() {
               <h3 className="text-2xl font-bold text-orange-500">
                 Data Science
               </h3>
-              <p className="mt-4 text-sm text-gray-400">
+              <div className="mt-4 text-sm text-gray-400">
                 <ul className="list-disc ml-4 space-y-2">
                   <li>
                     Uses algorithms and systems to extract knowledge from data.
@@ -102,7 +102,7 @@ export default function Department() {
                     analytics.
                   </li>
                 </ul>
-              </p>
+              </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
                 <span className="text-orange-500">Course Fee: </span>45,000 per
                 semester

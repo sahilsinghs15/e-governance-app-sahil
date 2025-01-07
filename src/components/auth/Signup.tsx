@@ -74,7 +74,6 @@ const Signup = () => {
     }
   };
 
-  
   return (
     <section className="wrapper relative flex min-h-screen items-center justify-center overflow-hidden antialiased">
       <motion.div
