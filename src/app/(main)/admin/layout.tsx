@@ -14,14 +14,10 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full pt-4 pb-3">
-      
-      <SessionProviderWrapper>
-        <Appbar />
-        {children}
-      </SessionProviderWrapper>
+    <div className="w-full ">
+      <Appbar />
+      {children}
       <Footer />
-      {/* Move Toaster inside the body */}
       <Toaster />
     </div>
   );

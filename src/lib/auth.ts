@@ -18,69 +18,66 @@ export const authOptions: AuthOptions = {
           throw new Error("Missing email or password");
         }
 
+        // Connect to the database
         await connectToDB();
+
+        // Find the user in the database
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) {
           throw new Error("No user found with the provided email");
         }
 
+        // Validate the password
         const isValidPassword = await bcrypt.compare(
           credentials.password,
           user.password
         );
+
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
 
-        // Log user details
-        console.log("User authenticated:", {
-          id: user._id.toString(),
-          email: user.email,
-          username: user.username,
-          role: user.role,
-        });
+        // Check if the user has a valid role
+        const validRoles = ["Student", "AdmissionAdmin", "SuperAdmin"];
+        if (!validRoles.includes(user.role)) {
+          throw new Error("Unauthorized role");
+        }
 
-        // Return user object to be used by the JWT callback
+        // Return the user object
         return {
           id: user._id.toString(),
           email: user.email,
           username: user.username || null,
-          role: user.role || "user", // Default to "user" if role is undefined
+          role: user.role,
         };
       },
     }),
   ],
-  pages: { signIn: "/signin", error: "/signin" },
+  pages: {
+    signIn: "/signin",
+    error: "/signin", // Customize this page as needed
+  },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id; // No type issue; user.id is always a string
-        token.email = user.email ?? null; // Ensure null for undefined
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        token.id = user.id;
+        token.email = user.email ?? null;
         //@ts-ignore
-
-        token.username = user.username ?? null; // Ensure null for undefined
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        token.username = user.username ?? null;
         //@ts-ignore
-
-        token.role = user.role ?? "user";
+        token.role = user.role;
       }
-
-      console.log("Generated JWT:", token);
       return token;
     },
     async session({ session, token }) {
       session.user = {
         id: token.id as string,
         email: token.email ?? null,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        username: token.username ?? null,
+        username: (token.username as string) ?? null,
         role: token.role as string,
       };
-
       return session;
     },
   },

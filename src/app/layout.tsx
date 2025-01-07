@@ -2,8 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { SessionProviderWrapper } from "@/components/SessionProviderWrapper"; // Import the wrapper
 import { Toaster } from "react-hot-toast";
-import Appbar from "@/components/Appbar";
-import { Footer } from "@/components/Footer";
+
 
 const inter = Inter({ subsets: ["latin"] });
 

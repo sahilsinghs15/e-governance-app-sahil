@@ -1,13 +1,20 @@
 import { Greeting } from "@/components/Greeting";
 import HeroSection from "@/components/HeroSection";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== "Student") {
-    redirect("/signin"); // Redirect if no session or not a student
+  if (!session) {
+    redirect("/signin"); // Redirect if no session
+  }
+
+  const { role } = session.user;
+
+  if (role !== "Student") {
+    redirect("/admin"); // Redirect non-students to the admin dashboard
   }
 
   // Render Student Home Page
