@@ -23,37 +23,39 @@ const AdminAppbar = () => {
   };
 
   return (
-    <div className="h-12 w-full flex items-center justify-between border-b border-gray-500 pl-10 pr-10 pb-2">
-      <div
-        className="text-2xl font-bold text-blue-600 hover:cursor-pointer"
-        onClick={() => routerHandler("/admin")}
-      >
-        Admin Dashboard
-      </div>
-      <div className="flex gap-6 text-white">
+    <div className="relative">
+      <div className="h-16 w-full flex items-center justify-between border-b border-gray-500 px-4 sm:px-10 bg-gray-900">
         <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/admin/lists")}
+          className="text-2xl font-bold text-blue-600 hover:cursor-pointer"
+          onClick={() => routerHandler("/admin")}
         >
-          Student Lists
+          Admin Dashboard
         </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/admin/settings")}
-        >
-          Settings
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={() => routerHandler("/admin/reports")}
-        >
-          Reports
-        </div>
-        <div
-          className="hover:cursor-pointer hover:underline"
-          onClick={handleLogout}
-        >
-          Logout
+        <div className="flex gap-6 text-white">
+          <div
+            className="hover:cursor-pointer hover:underline"
+            onClick={() => routerHandler("/admin/lists")}
+          >
+            Student Lists
+          </div>
+          <div
+            className="hover:cursor-pointer hover:underline"
+            onClick={() => routerHandler("/admin/settings")}
+          >
+            Settings
+          </div>
+          <div
+            className="hover:cursor-pointer hover:underline"
+            onClick={() => routerHandler("/admin/reports")}
+          >
+            Reports
+          </div>
+          <div
+            className="hover:cursor-pointer hover:underline"
+            onClick={handleLogout}
+          >
+            Logout
+          </div>
         </div>
       </div>
     </div>

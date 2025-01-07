@@ -73,6 +73,8 @@ const Signup = () => {
       setLoading(false); // Hide spinner
     }
   };
+
+  
   return (
     <section className="wrapper relative flex min-h-screen items-center justify-center overflow-hidden antialiased">
       <motion.div
