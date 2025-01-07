@@ -51,7 +51,7 @@ export default function Department() {
                 </ul>
               </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
-                <span className="text-orange-500">Course Fee: </span>35,000 per
+                <span className="text-orange-500">Course Fee: </span>₹35,000 per
                 semester
               </p>
             </div>
@@ -78,7 +78,7 @@ export default function Department() {
                 </ul>
               </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
-                <span className="text-orange-500">Course Fee: </span>40,000 per
+                <span className="text-orange-500">Course Fee: </span>₹40,000 per
                 semester
               </p>
             </div>
@@ -104,7 +104,7 @@ export default function Department() {
                 </ul>
               </div>
               <p className="mt-4 text-lg text-gray-300 font-medium">
-                <span className="text-orange-500">Course Fee: </span>45,000 per
+                <span className="text-orange-500">Course Fee: </span>₹45,000 per
                 semester
               </p>
             </div>
