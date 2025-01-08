@@ -13,7 +13,7 @@ const AdmissionsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 text-white">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center py-20 px-6 text-center space-y-6 md:space-y-10">
+      <section className="flex flex-col items-center justify-center py-16 px-6 text-center space-y-6 md:space-y-10">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide leading-tight">
           Welcome to Admissions
         </h1>

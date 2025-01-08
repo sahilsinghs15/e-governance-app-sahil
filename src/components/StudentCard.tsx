@@ -35,6 +35,7 @@ export const StudentCard: React.FC<StudentCardProps> = ({
       </p>
       <p className="text-gray-600">Gender: {student.gender}</p>
       <p className="text-gray-600">Course: {student.course}</p>
+      
     </div>
   );
 };

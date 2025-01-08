@@ -268,7 +268,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <div className="mb-3">
             <label
               htmlFor="course"
-              className="block text-xs font-medium text-black"
+              className="block text-xs font-normal text-black"
             >
               Course
             </label>
@@ -298,7 +298,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               12th Grade Marksheet
             </label>
             <input
-              id="marksheet"
+              id="marksheet"  
               type="file"
               className="mt-1 block w-full text-xs text-black file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}
