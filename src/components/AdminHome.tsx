@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
-import toast from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+// Ensure StudentCard component supports action buttons
 import { StudentModal } from "./StudentModal";
+import toast from "react-hot-toast";
+import StudentCard from "./StudentCard";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Student {
   _id: string;
@@ -27,15 +28,19 @@ const AdminHome: React.FC = () => {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Fetch students on mount
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch("/api/admin/studentForms");
+        const response = await fetch(
+          "http://localhost:3000/api/admin/studentForms"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch students");
         }
         const data = await response.json();
-        setStudents(data.students);
+        console.log("Data received:", data);
+        setStudents(data.students); // Set students from the API response
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -51,20 +56,25 @@ const AdminHome: React.FC = () => {
     action: "accept" | "reject"
   ) => {
     try {
-      const response = await fetch("/api/students/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ studentId, action }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/students/verify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ studentId, action }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update student action");
       }
-
       toast.success(`Student form ${action}ed successfully`);
 
-      setStudents((prev) =>
-        prev.map((student) =>
+      // Optionally update UI based on action
+      setStudents((prevStudents) =>
+        prevStudents.map((student) =>
           student._id === studentId
             ? { ...student, accepted: action === "accept" }
             : student
@@ -75,10 +85,10 @@ const AdminHome: React.FC = () => {
     }
   };
 
-  // const handleCardClick = (student: Student) => {
-  //   setSelectedStudent(student);
-  //   setShowModal(true);
-  // };
+  const handleCardClick = (student: Student) => {
+    setSelectedStudent(student);
+    setShowModal(true);
+  };
 
   const closeModal = () => {
     setShowModal(false);
@@ -95,68 +105,36 @@ const AdminHome: React.FC = () => {
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#111827]">
-        <p className="text-xl text-red-600">{error}</p>
-      </div>
-    );
+    return <div className="text-center p-6 text-red-600">{error}</div>;
   }
 
   return (
-    <div className="p-6 bg-[#111827] min-h-screen">
-      <h1 className="text-4xl font-bold text-center text-blue-400 mb-8">
-        Admin Dashboard
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold text-center mb-6">Admin Home</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {students.map((student) => (
-          <div
-            key={student._id}
-            className="relative bg-[#1f2937] border border-gray-700 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden p-6"
-          >
-            <div className="flex flex-col items-center text-center">
-              {/* Student Profile Avatar */}
-              <div className="w-20 h-20 bg-blue-600 text-white flex items-center justify-center rounded-full shadow-lg mb-4">
-                {student.name.charAt(0).toUpperCase()}
-              </div>
-              {/* Student Info */}
-              <h3 className="text-xl font-semibold text-gray-200">
-                {student.name}
-              </h3>
-              <p className="text-gray-400 text-sm">{student.email}</p>
-              <p className="text-gray-400 text-sm">{student.phone}</p>
-            </div>
-
-            {/* Status/Actions */}
-            <div className="mt-6">
+          <div key={student._id} className="border p-4 rounded bg-white shadow">
+            <StudentCard student={student} onClick={handleCardClick} />
+            <div className="flex justify-between mt-4">
               {student.accepted ? (
-                <div className="flex items-center justify-center gap-2 bg-green-700 text-green-100 rounded-full py-2 px-4">
-                  <span className="text-sm font-medium">Verified</span>
-                </div>
+                <span className="text-green-600 font-semibold">Verified</span>
               ) : (
-                <div className="flex justify-center gap-3">
+                <>
                   <button
                     onClick={() => handleAction(student._id, "accept")}
-                    className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-700 text-white text-sm rounded-lg shadow hover:scale-105 transition-transform duration-200"
+                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                   >
                     Accept
                   </button>
                   <button
                     onClick={() => handleAction(student._id, "reject")}
-                    className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white text-sm rounded-lg shadow hover:scale-105 transition-transform duration-200"
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                   >
                     Reject
                   </button>
-                </div>
+                </>
               )}
             </div>
-
-            {/* View Details */}
-            {/* <button
-              onClick={() => handleCardClick(student)}
-              className="absolute top-4 right-4 bg-blue-500 text-white text-sm px-3 py-1 rounded-full shadow hover:bg-blue-600 transition-all"
-            >
-              Details
-            </button> */}
           </div>
         ))}
       </div>

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { connectToDB } from "@/db/mongo";
 import Wallet from "@/models/Wallet";
 
-
 export async function POST(req: Request) {
   try {
     await connectToDB();

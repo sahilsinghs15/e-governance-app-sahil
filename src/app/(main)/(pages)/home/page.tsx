@@ -28,7 +28,7 @@ export default async function Home() {
             <Greeting /> {username}
           </h1>
         </div>
-        <div className="flex-1 flex flex-col gap-4 p-4 shadow-md pl-3 ml-3">
+        <div className="flex-1 flex flex-col gap-4  shadow-md ">
           <HeroSection />
         </div>
       </main>
