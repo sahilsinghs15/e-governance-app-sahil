@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { StudentCard } from "./StudentCard";
-import { StudentModal } from "./StudentModal";
+
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { StudentModal } from "./StudentModal";
 
 interface Student {
   _id: string;

@@ -2,6 +2,7 @@ import React from "react";
 
 import { X } from "lucide-react"; // Replace with your icon library if needed
 import { Button } from "./ui/button";
+import toast from "react-hot-toast";
 
 interface Student {
   userId: string;
@@ -25,12 +26,12 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   onClose,
 }) => {
   const handleAccept = () => {
-    console.log("Fee receipt generated for:", student.name);
+    toast.success(`Fee receipt generated for: ${student.name}`);
     onClose();
   };
 
   const handleReject = () => {
-    console.log("Rejected admission for:", student.name);
+    toast.success(`Rejected admission for: ${student.name}`);
     onClose();
   };
 

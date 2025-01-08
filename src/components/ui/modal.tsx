@@ -281,9 +281,11 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             >
               <option value="">Select your course</option>
-              <option value="IT">Information Technology</option>
-              <option value="CS">Computer Science</option>
-              <option value="DS">Data Science</option>
+              <option value="Information Technology">
+                Information Technology
+              </option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Data Science">Data Science</option>
             </select>
             {errors.course && (
               <p className="text-xs text-red-500 mt-1">{errors.course}</p>
@@ -298,7 +300,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               12th Grade Marksheet
             </label>
             <input
-              id="marksheet"  
+              id="marksheet"
               type="file"
               className="mt-1 block w-full text-xs text-black file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}

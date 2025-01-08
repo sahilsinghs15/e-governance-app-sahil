@@ -7,9 +7,9 @@ enum Gender {
 }
 
 enum Course {
-  IT = "IT",
-  CS = "CS",
-  DS = "DS",
+  IT = "Information Technology",
+  CS = "Computer Science",
+  DS = "Data Science",
 }
 
 export interface studentInterface extends Document {
