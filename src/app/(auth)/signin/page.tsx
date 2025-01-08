@@ -11,8 +11,7 @@ import {
   redirect,
  } from 'next/navigation'
  
-
-export  const SigninPage = async () => {
+const SigninPage = async () => {
   const session  = await  getServerSession(authOptions);
 
   if(session?.user) {
@@ -21,4 +20,4 @@ export  const SigninPage = async () => {
 
   return <Signin/>;
 } 
-
+export default SigninPage;
