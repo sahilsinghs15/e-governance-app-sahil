@@ -1,16 +1,10 @@
-import { NextResponse } from "next/server";
 import { connectToDB } from "@/db/mongo";
-import Student from "@/models/Student_Registration";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import Student from "@/models/Student_Registration";
 import User from "@/models/User";
 import Wallet from "@/models/Wallet";
-
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -57,6 +51,21 @@ export async function POST(req: Request) {
       );
     }
 
+    // Map descriptive course names to enum values
+    const courseMap: Record<string, string> = {
+      "Computer Science": "CS",
+      "Information Technology": "IT",
+      "Data Science": "DS",
+    };
+
+    const mappedCourse = courseMap[course];
+    if (!mappedCourse) {
+      return NextResponse.json(
+        { error: "Invalid course value" },
+        { status: 400 }
+      );
+    }
+
     const studentForm = await Student.create({
       userId: userId,
       name,
@@ -64,7 +73,7 @@ export async function POST(req: Request) {
       phone,
       dob,
       gender,
-      course,
+      course: mappedCourse, // Use the mapped value
     });
 
     user.filledForm = true;

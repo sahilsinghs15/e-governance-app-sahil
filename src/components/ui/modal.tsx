@@ -117,7 +117,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           phone: phone,
           dob: dob,
           gender: gender.toUpperCase(),
-          course: course.toUpperCase(),
+          course: course,
         }),
       });
 
