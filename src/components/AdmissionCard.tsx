@@ -35,10 +35,27 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application }) => (
       <p className="text-gray-300 mb-1">
         Gender: {application.gender || "N/A"}
       </p>
-      <p className="text-gray-300">Course: {application.course || "N/A"}</p>
+      <p className="text-gray-300 mb-1">
+        Course: {application.course || "N/A"}
+      </p>
+      <p className="mt-2 text-white gap-2">
+        Admission Status :{" "}
+        <span
+          className={application.admitted ? "text-green-500" : "text-red-600"}
+        >
+          {application.admitted ? " Admitted" : " Pending"}
+        </span>
+      </p>
+
+      {application.admitted && (
+        <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg">
+          Pay the fee for the course
+        </button>
+      )}
     </div>
   </div>
 );
+
 
 
 interface YourApplicationPageProps {
