@@ -1,6 +1,10 @@
 "use client";
 
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+
 export const Greeting = () => {
+
 
   const currentHour = new Date().getHours();
 

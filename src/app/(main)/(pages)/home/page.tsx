@@ -13,6 +13,8 @@ export default async function Home() {
 
   const { role } = session.user;
 
+  const username  = session.user.username;
+
   if (role !== "Student") {
     redirect("/admin"); // Redirect non-students to the admin dashboard
   }
@@ -23,7 +25,7 @@ export default async function Home() {
       <main className="flex-1 flex flex-col gap-6 mt-3">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-extrabold capitalize tracking-tighter md:text-4xl text-white p-3 pl-6">
-            <Greeting />
+            <Greeting /> {username}
           </h1>
         </div>
         <div className="flex-1 flex flex-col gap-4 p-4 shadow-md pl-3 ml-3">
