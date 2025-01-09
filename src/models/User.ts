@@ -1,25 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-// enum Role {
-//   Student = "Student",
-//   AdmissionAdmin = "AdmissionAdmin",
-//   SuperAdmin = "SuperAdmin",
-// }
 
 enum Role {
   Student = "Student" , 
   AdmissionAdmin =  "AdmissionAdmin" ,
   SuperAdmin = "SuperAdmin"
 }
-
-// export interface UserInterface extends Document {
-//   username: string;
-//   email: string;
-//   password: string;
-//   filledForm?: boolean;
-//   admitted?: boolean;
-//   role?: Role;
-// }
 
 
 export interface UserInterface extends Document {
@@ -31,7 +17,6 @@ export interface UserInterface extends Document {
   role? : Role;
 }
 
-// Define the  Schema
 const userSchema = new Schema<UserInterface>(
 
   {
@@ -48,13 +33,7 @@ const userSchema = new Schema<UserInterface>(
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
 
-    // password: {
-    //   type: String,
-    //   required: true,
-    //   minlength: 6,
-    // },
-
-
+  
     password  :{ 
       required  :true ,
       type :String,
