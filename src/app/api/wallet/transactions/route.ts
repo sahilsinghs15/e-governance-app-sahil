@@ -14,12 +14,14 @@ export async function GET() {
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const student = await Student.findById(session.user.id);
+    console.log("Session ID :" + session.user.id);
+    const student = await Student.findOne({ userId: session.user.id });
+    console.log("Student:", student);
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }
     const studentId = student._id;
-    const wallet = await Wallet.findOne({ studentId });
+    const wallet = await Wallet.findOne({ studentId: studentId });
     if (!wallet) {
       return NextResponse.json(
         { error: "Wallet not found for the student" },

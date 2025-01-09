@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 interface ITransaction extends Document {
   walletId: mongoose.Types.ObjectId;

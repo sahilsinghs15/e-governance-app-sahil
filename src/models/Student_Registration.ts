@@ -7,9 +7,9 @@ enum Gender {
 }
 
 enum Course {
-  InformationTechnology = "Information Technology",
-  ComputerScience = "Computer Science",
-  DataScience = "Data Science",
+  IT = "IT",
+  CS = "CS",
+  DS = "DS",
 }
 
 export interface studentInterface extends Document {
@@ -21,6 +21,7 @@ export interface studentInterface extends Document {
   gender: Gender;
   course: Course;
   rollNo?: string;
+  accepted?: boolean;
   admitted?: boolean;
 }
 
@@ -67,6 +68,10 @@ const studentSchema = new Schema<studentInterface>(
 
     rollNo: {
       type: String,
+    },
+    accepted: {
+      type: Boolean,
+      default: false,
     },
 
     admitted: {

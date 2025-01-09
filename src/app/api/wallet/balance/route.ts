@@ -9,15 +9,15 @@ export async function GET() {
   try {
     await connectToDB();
     const session = await getServerSession(authOptions);
-    if (!session) {
+    if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const student = await Student.findById(session.user.id);
+    const student = await Student.findOne({ userId: session.user.id });
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }
     const studentId = student._id;
-    const wallet = await Wallet.findOne({ studentId });
+    const wallet = await Wallet.findOne({ studentId: studentId });
     if (!wallet) {
       return NextResponse.json(
         { error: "Wallet not found for the student" },
