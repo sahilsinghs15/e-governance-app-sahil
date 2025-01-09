@@ -296,11 +296,11 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           {/* Submit Button */}
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             <Button
               type="submit"
               variant={"default"}
-              size="sm"
+              size="lg"
               disabled={isFormIncomplete}
               className="bg-green-400"
             >
