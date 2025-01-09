@@ -4,11 +4,10 @@ import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import { connectToDB } from "@/db/mongo";
 
-
 export const authOptions: AuthOptions = {
   // session: { strategy: "jwt" },
-  session : {
-    strategy : "jwt",
+  session: {
+    strategy: "jwt",
   },
   providers: [
     CredentialsProvider({

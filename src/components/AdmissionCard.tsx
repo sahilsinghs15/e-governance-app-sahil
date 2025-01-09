@@ -11,7 +11,7 @@ const ApplicationCard = ({
   onPayFee: () => void;
 }) => {
   return (
-    <div className="text-white font-bold shadow-md rounded-lg p-6 flex gap-6 items-center h-56 border-2">
+    <div className="text-white font-bold shadow-md rounded-lg p-6 flex gap-6 items-center h-56">
       <img
         src={application.imageUrl || "/default-student.jpg"}
         alt="Student"
@@ -38,12 +38,12 @@ const ApplicationCard = ({
           <p className="text-gray-300 mb-1">Roll no: {application.rollNo}</p>
         )}
         {!application.admitted && (
-          <p className="text-white">Student not admitted yet</p>
+          <p className="text-gray-600">Student not admitted yet</p>
         )}
       </div>
 
       {application.accepted && !application.admitted && (
-        <div className="flex justify-center border-4 border-white p-4 rounded-lg mt-4 w-24 shadow-md text-white">
+        <div className="flex justify-center border-4 border-white p-4 rounded-lg mt-4 w-24 shadow-md">
           <button onClick={onPayFee}>Pay Fee</button>
         </div>
       )}

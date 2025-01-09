@@ -101,9 +101,7 @@ export default function StudentPdf() {
 
         {/* Main Application Details Card */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-700 p-3 rounded-lg shadow-md">
-
-          <YourApplicationPage application={studentDetails} />
-          
+          <YourApplicationPage  />
         </div>
 
         {/* Additional Information Section */}

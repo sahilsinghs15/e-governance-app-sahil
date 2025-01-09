@@ -7,27 +7,22 @@ import { useRouter } from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import axios from "axios"
+import axios from "axios";
 import Link from "next/link";
 
-const emailDomains = [
-  "gmail.com",
-  "yahoo.com",
-  "outlook.com",
-  "hotmail.com",
-];
+const emailDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
 
 const Signin = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [checkingPassword, setCheckingPassword] = useState(false);
-  const [requiredError, setRequiredError] = useState({ 
+  const [requiredError, setRequiredError] = useState({
     emailReq: false,
     passReq: false,
   });
   const [loading, setLoading] = useState(false);
   const [suggestedDomains, setSuggestedDomains] =
     useState<string[]>(emailDomains);
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const passwordRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -37,60 +32,60 @@ const Signin = () => {
   }
   const router = useRouter();
   const email = useRef("");
-  const username = useRef("");        
+  const username = useRef("");
   const password = useRef("");
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      email.current = value;
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    email.current = value;
 
-      setRequiredError((prevState) => ({
-        ...prevState,
-        emailReq: false,
-      }));
+    setRequiredError((prevState) => ({
+      ...prevState,
+      emailReq: false,
+    }));
 
-      if (!value.includes("@")) {
-        setSuggestedDomains(emailDomains);
-        return;
+    if (!value.includes("@")) {
+      setSuggestedDomains(emailDomains);
+      return;
+    }
+
+    const [, currentDomain] = value.split("@");
+    const matchingDomains = emailDomains.filter((domain) =>
+      domain.startsWith(currentDomain)
+    );
+    setSuggestedDomains(matchingDomains);
+  };
+
+  const handleSubmit = async () => {
+    if (!email.current || !password.current) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await signIn("credentials", {
+        username: username.current,
+        email: email.current,
+        password: password.current,
+        redirect: false,
+      });
+
+      setLoading(false);
+
+      if (res?.error) {
+        console.error("Sign-in error:", res.error);
+        toast.error(res.error);
+      } else {
+        toast.success("Successfully signed in!");
+        router.push("/home");
       }
-
-      const [, currentDomain] = value.split("@");
-      const matchingDomains = emailDomains.filter((domain) =>
-        domain.startsWith(currentDomain)
-      );
-      setSuggestedDomains(matchingDomains);
-    };
-
-    const handleSubmit = async () => {
-      if (!email.current || !password.current) {
-        toast.error("Please fill in all required fields.");
-        return;
-      }
-
-      setLoading(true);
-      try {
-        const res = await signIn("credentials", {
-          username : username.current,
-          email: email.current,
-          password: password.current,
-          redirect: false,
-        });
-
-        setLoading(false);
-
-        if (res?.error) {
-          console.error("Sign-in error:", res.error);
-          toast.error(res.error);
-        } else {
-          toast.success("Successfully signed in!");
-          router.push("/home");
-        }
-      } catch (error) {
-        console.error("Unexpected error during sign-in:", error);
-        toast.error("An unexpected error occurred. Please try again.");
-        setLoading(false);
-      }
-    };
+    } catch (error) {
+      console.error("Unexpected error during sign-in:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+      setLoading(false);
+    }
+  };
 
   // // Handle clicks outside the dropdown
   // useEffect(() => {
@@ -136,17 +131,16 @@ const Signin = () => {
         <div className="flex flex-col gap-8">
           <div className="grid w-full items-center gap-4">
             <div className="relative flex flex-col gap-2">
-
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  className="focus:ring-none border-none bg-primary/5 focus:outline-none"
-                  name="username"
-                  id="username"
-                  placeholder="Your username"
-                  onChange={(e) => {
-                    username.current = e.target.value;
-                  }}
-                />
+              <Label htmlFor="username">Username</Label>
+              <Input
+                className="focus:ring-none border-none bg-primary/5 focus:outline-none"
+                name="username"
+                id="username"
+                placeholder="Your username"
+                onChange={(e) => {
+                  username.current = e.target.value;
+                }}
+              />
               <Label htmlFor="email">Email</Label>
               <Input
                 className="focus:ring-none border-none bg-primary/5 focus:outline-none"
@@ -232,7 +226,10 @@ const Signin = () => {
             </div>
           </div>
           <div className="text-center text-sm text-white">
-            Already have an account? <Link className="hover:underline " href="/signup">Sign up</Link>
+            Already have an account?{" "}
+            <Link className="hover:underline " href="/signup">
+              Sign up
+            </Link>
           </div>
           <Button
             size={"lg"}

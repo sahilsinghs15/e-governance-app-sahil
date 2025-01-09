@@ -1,60 +1,58 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-
 enum Role {
-  Student = "Student" , 
-  AdmissionAdmin =  "AdmissionAdmin" ,
-  SuperAdmin = "SuperAdmin"
+  Student = "Student",
+  AdmissionAdmin = "AdmissionAdmin",
+  SuperAdmin = "SuperAdmin",
 }
-
 
 export interface UserInterface extends Document {
-  username : string ;
-  email : string ;
-  password : string;
-  filledForm? : boolean;
-  admitted? : boolean;
-  role? : Role;
+  username: string;
+  email: string;
+  password: string;
+  filledForm?: boolean;
+  admitted?: boolean;
+  role?: Role;
 }
 
+// Define the  Schema
 const userSchema = new Schema<UserInterface>(
-
   {
-    username  : {
-      type  : String , 
-      required : true,
-      trim : true,
+    username: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    email :{
-      type : String ,
-      required : true,
-      unique : true,
-      lowercase :true,
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
 
-  
-    password  :{ 
-      required  :true ,
-      type :String,
-      minline : 6,
-    } , 
-  
-    filledForm  :{
-      type :Boolean , 
-      default : false
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
     },
 
-    admitted : {
-      type : Boolean,
-      default : false,
+    filledForm: {
+      type: Boolean,
+      default: false,
     },
 
-    role : {
-      type : String ,
-      enum  : Object.values(Role),
-      default : "Student"
-    }
+    admitted: {
+      type: Boolean,
+      default: false,
+    },
+
+    role: {
+      type: String,
+      enum: Object.values(Role),
+      default: "Student",
+    },
   },
   {
     timestamps: true,
