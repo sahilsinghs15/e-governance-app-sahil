@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import YourApplicationPage from "@/components/AdmissionCard";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface StudentDetails {
   name: string;
@@ -78,7 +79,10 @@ export default function StudentPdf() {
   };
 
   if (loading) {
-    return <div className="text-white text-center">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-[#111827]">
+            <AiOutlineLoading3Quarters className="text-4xl text-blue-700 animate-spin"/>
+            <span className="ml-4 text-lg text-gray-600">Loading Please Wait.....</span>
+          </div>
   }
 
   if (error) {

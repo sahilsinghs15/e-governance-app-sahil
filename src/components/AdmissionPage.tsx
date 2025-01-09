@@ -2,13 +2,22 @@
 
 import React, { useState } from "react";
 import { Modal } from "./ui/modal";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const AdmissionsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ loading , setLoading ] = useState(true); 
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  if(!loading){
+    return <div className="flex items-center justify-center min-h-screen bg-[#111827]">
+          <AiOutlineLoading3Quarters className="text-4xl text-blue-700 animate-spin"/>
+          <span className="ml-4 text-lg text-gray-600">Loading Please Wait.....</span>
+        </div>
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-800 via-indigo-800 to-blue-800 text-white">
