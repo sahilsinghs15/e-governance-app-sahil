@@ -1,107 +1,93 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "./button";
-import { X } from "lucide-react"; // Icon library
-import toast from "react-hot-toast"; // Notification library
+import { X } from "lucide-react"; 
+import toast from "react-hot-toast";
 import { Input } from "./input";
 import { useRouter } from "next/navigation";
+import { Label } from "@radix-ui/react-label";
+import { error } from "console";
+
+// interface ModalProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+// }
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen : boolean;
+  onClose : () => void;
 }
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    dob: "",
-    gender: "",
-    course: "",
-    marksheet: null as File | null,
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", dob: "", gender: "", course: "", marksheet: null as File | null,
   });
 
-  const isFormIncomplete =
-    !formData.name ||
-    !formData.email ||
-    !formData.phone ||
-    !formData.dob ||
-    !formData.gender ||
-    !formData.course ||
-    !formData.marksheet;
+  const isFormIncomplete = !formData.name || !formData.email || !formData.phone || !formData.dob || !formData.gender || !formData.course || !formData.marksheet;
 
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    dob: "",
-    gender: "",
-    course: "",
-    marksheet: "",
-  });
+  const [errors, setErrors] = useState({ name: "", email: "", phone: "", dob: "",  gender: "", course: "", marksheet: "", });
   const router = useRouter();
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-    setErrors({ ...errors, [id]: "" });
-  };
+
+
+  const handleInputChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id , value } = e.target;
+    setFormData({...formData , [id] : value});
+    setErrors({...errors , [id] : ""})
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
 
     if (file) {
       const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-      if (!allowedTypes.includes(file.type)) {
+      
+      if(!allowedTypes.includes(file.type)){
         setErrors({
-          ...errors,
-          marksheet: "Only JPEG, PNG, and JPG files are allowed.",
+          ...errors ,
+          marksheet : "Only JPEG, PNG, and JPG files are allowed."
+
         });
-        setFormData({ ...formData, marksheet: null });
+        setFormData({...formData , marksheet : null});
         return;
       }
-      if (file.size > 10 * 1024 * 1024) {
-        setErrors({
-          ...errors,
-          marksheet: "File size should not exceed 10 MB.",
-        });
-        setFormData({ ...formData, marksheet: null });
+
+      if(file.size > 10 *1024 *1024) {
+        setErrors({...errors , marksheet : "file size should not exceed than 10 mb."});
+        setFormData({...formData , marksheet : null});
         return;
       }
     }
 
-    setFormData({ ...formData, marksheet: file });
-    setErrors({ ...errors, marksheet: "" });
+    
+    setFormData({...formData , marksheet : file});
+    setErrors({...errors , marksheet : ""})
   };
 
-  const validateForm = () => {
-    const valid = true;
-    const newErrors: typeof errors = {
-      name: "",
-      email: "",
-      phone: "",
-      dob: "",
-      gender: "",
-      course: "",
-      marksheet: "",
-    };
+  // const validateForm = () => {
+  //   const valid = true;
+  //   const newErrors: typeof errors = {
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     dob: "",
+  //     gender: "",
+  //     course: "",
+  //     marksheet: "",
+  //   };
 
-    if (!formData.name) newErrors.name = "Name is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Invalid email.";
-    if (!formData.phone) newErrors.phone = "Phone number is required.";
-    if (!formData.dob) newErrors.dob = "Date of birth is required.";
-    if (!formData.gender) newErrors.gender = "Gender is required.";
-    if (!formData.course) newErrors.course = "Course selection is required.";
-    // if (!formData.marksheet) newErrors.marksheet = "Marksheet is required.";
+  //   if (!formData.name) newErrors.name = "Name is required.";
+  //   if (!formData.email) newErrors.email = "Email is required.";
+  //   if (!/\S+@\S+\.\S+/.test(formData.email))
+  //     newErrors.email = "Invalid email.";
+  //   if (!formData.phone) newErrors.phone = "Phone number is required.";
+  //   if (!formData.dob) newErrors.dob = "Date of birth is required.";
+  //   if (!formData.gender) newErrors.gender = "Gender is required.";
+  //   if (!formData.course) newErrors.course = "Course selection is required.";
+  //   // if (!formData.marksheet) newErrors.marksheet = "Marksheet is required.";
 
-    setErrors(newErrors);
-    return valid;
-  };
+  //   setErrors(newErrors);
+  //   return valid;
+  // };
 
   const handleSubmission = async (event: any) => {
     event.preventDefault();
@@ -121,10 +107,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         }),
       });
 
-      const data = await response.json();
+      const data =  await response.json();
 
-      if (!response.ok) {
-        toast.error(data.error || "Failed to submit the form.");
+      if ( !response.ok ) {
+         toast.error(data.error || "Failed to submit the form.");
         return;
       }
 
@@ -265,13 +251,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             )}
           </div>
           {/* Course */}
+
           <div className="mb-3">
-            <label
+            <Label
               htmlFor="course"
               className="block text-xs font-normal text-black"
             >
               Course
-            </label>
+            </Label>
             <select
               id="course"
               className={`w-full mt-1 p-2 border border-gray-700/50 rounded-md focus:outline-none text-gray-800 focus:ring-2 focus:ring-blue-500 ${
@@ -280,40 +267,39 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               value={formData.course}
               onChange={handleInputChange}
             >
-              <option value="">Select your course</option>
+              <option value="">Select your Course</option>
               <option value="Information Technology">
                 Information Technology
               </option>
               <option value="Computer Science">Computer Science</option>
               <option value="Data Science">Data Science</option>
             </select>
-            {errors.course && (
-              <p className="text-xs text-red-500 mt-1">{errors.course}</p>
-            )}
           </div>
+          
+
           {/* Upload Marksheet */}
           <div className="mb-3">
-            <label
+            <Label
               htmlFor="marksheet"
               className="block text-xs font-medium text-black"
             >
               12th Grade Marksheet
-            </label>
-            <input
+            </Label>
+            <Input
               id="marksheet"
               type="file"
-              className="mt-1 block w-full text-xs text-black file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleFileChange}
+              className=" mt-1 block w-full texts-xs text-black file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 border border-gray-700/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.marksheet && (
-              <p className="text-xs text-red-500 mt-1">{errors.marksheet}</p>
+              <p className="text-xs text-red-500 mt-1"> {errors.marksheet}</p>
             )}
           </div>
           {/* Submit Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <Button
               type="submit"
-              variant="default"
+              variant={"default"}
               size="sm"
               disabled={isFormIncomplete}
               className="bg-green-400"
