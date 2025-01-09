@@ -114,6 +114,7 @@ const AdminHome: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {students.map((student) => (
           <div key={student._id} className="border p-4 rounded bg-white shadow">
+            //@ts-ignore
             <StudentCard student={student} onClick={handleCardClick} />
             <div className="flex justify-between mt-4">
               {student.accepted ? (

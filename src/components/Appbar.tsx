@@ -18,7 +18,7 @@ const Appbar = () => {
 
   
   return session.user.role === "Student" ? <StudentAppbar /> : <AdminAppbar />;
-  // return <StudentAppbar />;
+  
 };
 
 export default Appbar;
