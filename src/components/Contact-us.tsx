@@ -1,3 +1,5 @@
+//Contact us
+
 "use client";
 
 import { useState } from "react";
@@ -6,7 +8,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 
-export default function ContactUS() {
+export default function ContactUs() {
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -23,9 +25,10 @@ export default function ContactUS() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully!");
+    toast.success("Message Sent successfully!");
     console.log(form);
-    // Clear the form after submission
+
+    //clear the form after submission
     setForm({
       fullName: "",
       email: "",
@@ -42,36 +45,42 @@ export default function ContactUS() {
         </h1>
 
         <div className="flex flex-wrap -mx-4">
-          {/* Contact Details */}
+          {/* Contact details*/}
           <div className="w-full lg:w-1/3 px-4 mb-8 lg:mb-0">
             <div className="bg-gradient-to-br from-purple-800 to-gray-800 rounded-lg shadow-lg p-6 text-white">
-              <h2 className="text-2xl font-semibold mb-6">Reach Us</h2>
+              <h2 className="text-2xl font-semibold mb-6 ">Reach Us</h2>
               <p className="mb-4">
                 <strong>E-Governance</strong>
-                <br /> Andheri East, Mumbai, Maharashtra 400093
+                <br /> Andheri East , Mumbai , Maharashtra 400093
               </p>
+
               <p className="mb-4">
-                <strong>Contact Us:</strong>
-                <br /> Mobile No: 1234567890
+                <strong>Contact Us :</strong>
+                <br /> Mobile NO : 1234567890
               </p>
+
               <p>
-                <strong>Write To Us:</strong>
-                <br /> info@e-governance.ac.in
+                <strong>Write To Us : </strong>
+                <br />
+                info@e-governace.ac.in
               </p>
             </div>
           </div>
 
-          {/* Contact Form */}
+          {/* Contact Form*/}
+
           <div className="w-full lg:w-2/3 px-4">
             <div className="bg-gradient-to-br from-purple-800 to-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-6 text-white">
+              <h2 className="text-2xl font-semibold mb-6 text-white ">
                 Drop us a message
               </h2>
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-6">
                   <Label htmlFor="fullName" className="text-white">
                     Full Name <span className="text-red-500">*</span>
                   </Label>
+
                   <Input
                     type="text"
                     id="fullName"
@@ -87,6 +96,7 @@ export default function ContactUS() {
                   <Label htmlFor="email" className="text-white">
                     Your Email <span className="text-red-500">*</span>
                   </Label>
+
                   <Input
                     type="email"
                     id="email"
@@ -102,6 +112,7 @@ export default function ContactUS() {
                   <Label htmlFor="subject" className="text-white">
                     Subject <span className="text-red-500">*</span>
                   </Label>
+
                   <Input
                     type="text"
                     id="subject"
@@ -136,8 +147,9 @@ export default function ContactUS() {
                       className="h-4 w-4 text-purple-500 border-gray-300 rounded"
                       required
                     />
+
                     <Label htmlFor="notRobot" className="ml-2 text-white">
-                      I&#39;m not a robot
+                      I&#39; m not a robot
                     </Label>
                   </div>
                 </div>

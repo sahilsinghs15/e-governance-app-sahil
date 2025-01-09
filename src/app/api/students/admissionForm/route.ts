@@ -1,19 +1,21 @@
+// /students/admissionForm
+import { NextResponse } from "next/server";
 import { connectToDB } from "@/db/mongo";
-import { authOptions } from "@/lib/auth";
 import Student from "@/models/Student_Registration";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import User from "@/models/User";
 import Wallet from "@/models/Wallet";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     await connectToDB();
-
     const session = await getServerSession(authOptions);
     if (!session?.user) {
       return NextResponse.json(
-        { error: "Student must be logged in to submit the form" },
+        {
+          error: "Student should be logged in to submit the form",
+        },
         { status: 400 }
       );
     }
@@ -21,7 +23,9 @@ export async function POST(req: Request) {
     const userId = session.user.id;
     if (!userId) {
       return NextResponse.json(
-        { error: "Student is not logged in" },
+        {
+          error: "Student is not logged in , Login first!",
+        },
         { status: 404 }
       );
     }
@@ -29,13 +33,15 @@ export async function POST(req: Request) {
     const user = await User.findById(userId);
     if (!user) {
       return NextResponse.json(
-        { error: "User not found in the Database" },
+        {
+          error: " User does not exist in the database",
+        },
         { status: 404 }
       );
     }
 
     const { name, email, phone, dob, gender, course } = await req.json();
-    console.log("Payload received:", {
+    console.log("Payload received : ", {
       name,
       email,
       phone,
@@ -44,24 +50,11 @@ export async function POST(req: Request) {
       course,
     });
 
-    if (!name || !email || !phone || !dob || !gender || !course) {
+    if (!name || !email || !dob || !gender || !course) {
       return NextResponse.json(
-        { error: "All fields are required, including the marksheet" },
-        { status: 400 }
-      );
-    }
-
-    // Map descriptive course names to enum values
-    const courseMap: Record<string, string> = {
-      "Computer Science": "CS",
-      "Information Technology": "IT",
-      "Data Science": "DS",
-    };
-
-    const mappedCourse = courseMap[course];
-    if (!mappedCourse) {
-      return NextResponse.json(
-        { error: "Invalid course value" },
+        {
+          error: "All field should be filled , including the marksheet",
+        },
         { status: 400 }
       );
     }
@@ -73,7 +66,7 @@ export async function POST(req: Request) {
       phone,
       dob,
       gender,
-      course: mappedCourse, // Use the mapped value
+      course,
     });
 
     user.filledForm = true;
@@ -93,9 +86,11 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error processing the request:", error);
+    console.error("Error in processing the request: ", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      {
+        error: "Internal Server Error",
+      },
       { status: 500 }
     );
   }

@@ -1,8 +1,9 @@
+//admins/generateFeeReceipt
+
 import { NextResponse } from "next/server";
 import Student from "@/models/Student_Registration";
 import { connectToDB } from "@/db/mongo";
 import Receipt from "@/models/FeeReceipt";
-
 
 export async function POST(req: Request) {
   try {
@@ -11,32 +12,38 @@ export async function POST(req: Request) {
 
     if (!studentId || !amount || !description) {
       return NextResponse.json(
-        { error: "Student ID, amount, and description are required" },
+        {
+          error: "Student id , amount , and description are required",
+        },
         { status: 400 }
       );
     }
 
     const student = await Student.findById(studentId);
     if (!student) {
-      return NextResponse.json({ error: "Student not found" }, { status: 404 });
+      return NextResponse.json({ error: "student not found" }, { status: 404 });
     }
 
-    const feeReciept = new Receipt({
+    const feeReceipt = new Receipt({
       studentId,
       amount,
       description,
     });
 
-    await feeReciept.save();
+    await feeReceipt.save();
 
     return NextResponse.json(
-      { message: "Fee receipt generated successfully" },
+      {
+        message: "fee receipt generated successfully",
+      },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      {
+        error: "Internal server error",
+      },
       { status: 500 }
     );
   }

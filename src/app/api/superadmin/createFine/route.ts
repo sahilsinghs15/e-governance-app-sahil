@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+//superadmin/createFine
 
+import { NextResponse } from "next/server";
 import { connectToDB } from "@/db/mongo";
 import Fine from "@/models/Fine";
 
@@ -8,10 +9,11 @@ export async function POST(req: Request) {
 
   try {
     await connectToDB();
-
     if (!studentId || !type || !amount) {
       return NextResponse.json(
-        { error: "Student ID, fine type, and amount are required" },
+        {
+          error: "studnet id , fine type , and amount are rquired",
+        },
         { status: 400 }
       );
     }
@@ -22,16 +24,21 @@ export async function POST(req: Request) {
       amount,
       createdAt: new Date(),
     });
+
     await newFine.save();
 
     return NextResponse.json(
-      { message: "Fine created successfully" },
+      {
+        message: "fine created successfully",
+      },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      {
+        error: " Internal server error",
+      },
       { status: 500 }
     );
   }

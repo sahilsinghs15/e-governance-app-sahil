@@ -1,3 +1,5 @@
+// studentcard.tsx
+
 import React from "react";
 
 interface Student {
@@ -10,7 +12,7 @@ interface Student {
   gender: string;
   course: string;
   rollNo?: string;
-  accepted?: boolean;
+  accepted: boolean;
   admitted?: boolean;
 }
 
@@ -19,11 +21,11 @@ interface StudentCardProps {
   onClick: (student: Student) => void;
 }
 
-const StudentCard: React.FC<StudentCardProps> = ({ student, onClick }) => {
+const StudentCard: React.FC<StudentCardProps> = ({ student, onClick}) => {
   return (
     <div
-      className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
-      onClick={() => onClick(student)}
+    className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+    onClick={() => onClick(student)}
     >
       <h2 className="text-xl font-semibold text-black mb-2">{student.name}</h2>
       <ul className="list-disc">
