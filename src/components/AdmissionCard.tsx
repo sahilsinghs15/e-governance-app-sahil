@@ -13,7 +13,7 @@ const ApplicationCard = ({
   return (
     <div className="text-white font-bold shadow-md rounded-lg p-6 flex gap-6 items-center h-56">
       <img
-        src={application.imageUrl || "/default-student.jpg"}
+        src={"https://avatar.iran.liara.run/public/boy?username=${user}"}
         alt="Student"
         className="w-32 h-32 rounded-full object-cover border-4 border-gray-700"
       />

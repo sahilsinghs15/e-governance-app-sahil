@@ -5,22 +5,41 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 const Account = () => {
-  const [openMenu, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement | null>(null); // Set type for menuRef
+  // const [openMenu, setMenuOpen] = useState(false);
+  // const menuRef = useRef<HTMLDivElement | null>(null); // Set type for menuRef
+  // const router = useRouter();
+
+  // const menuToggle = () => {
+  //   setMenuOpen((prev) => !prev);
+  // };
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await signOut({
+  //       callbackUrl: "/signin",
+  //     });
+  //     toast.success("Logged out successfully!");
+  //   } catch (error) {
+  //     toast.error("Failed to log out. Please try again.");
+  //   }
+  // };
+
+  const [ openMenu , setMenuOpen ] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null> (null);
   const router = useRouter();
 
-  const menuToggle = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const menuToggle =() => {
+    setMenuOpen((prev) => !prev)
+  }
 
   const handleLogout = async () => {
     try {
-      await signOut({
-        callbackUrl: "/signin",
-      });
-      toast.success("Logged out successfully!");
+    await signOut({
+      callbackUrl: "/signin",
+    });
+    toast.success("Logged out successfully !!!");
     } catch (error) {
-      toast.error("Failed to log out. Please try again.");
+      toast.error("Failed to log out. Please try again!!!");
     }
   };
 
