@@ -46,7 +46,7 @@ const HeroSection = () => {
             <motion.button
               onClick={() => router.push("/admission")}
               whileHover={{ scale: 1.1 }}
-              className="mt-8 px-8 py-4 bg-transparent hover:bg-yellow-300 border-white border-2 text-gray-800 font-semibold rounded-2xl shadow-lg transition-all"
+              className="mt-8 px-8 py-4 bg-transparent hover:bg-white border-white border-2 text-white hover:text-gray-800 font-semibold rounded-2xl shadow-lg transition-all"
             >
               Learn more
             </motion.button>
