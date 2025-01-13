@@ -35,13 +35,22 @@ const HeroSection = () => {
             Empowering institutions with efficient admissions, academics, and
             resources management for a seamless experience.
           </p>
-          <motion.button
-            onClick={() => router.push("/admission")}
-            whileHover={{ scale: 1.1 }}
-            className="mt-8 px-8 py-4 bg-yellow-300 text-gray-800 font-semibold rounded-full shadow-lg hover:bg-yellow-400 transition-all"
-          >
-            Get Started
-          </motion.button>
+          <div className="gap-3 space-x-3">
+            <motion.button
+              onClick={() => router.push("/admission")}
+              whileHover={{ scale: 1.1 }}
+              className="mt-8 px-8 py-4 bg-yellow-300 text-gray-800 font-semibold rounded-2xl shadow-lg hover:bg-yellow-400 transition-all"
+            >
+              Get Started
+            </motion.button>
+            <motion.button
+              onClick={() => router.push("/admission")}
+              whileHover={{ scale: 1.1 }}
+              className="mt-8 px-8 py-4 bg-transparent hover:bg-yellow-300 border-white border-2 text-gray-800 font-semibold rounded-2xl shadow-lg transition-all"
+            >
+              Learn more
+            </motion.button>
+          </div>
         </motion.div>
       </section>
 

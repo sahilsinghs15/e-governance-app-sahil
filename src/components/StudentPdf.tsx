@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import YourApplicationPage from "@/components/AdmissionCard";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+
 
 interface StudentDetails {
   name: string;
@@ -22,7 +25,7 @@ export default function StudentPdf() {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const router = useRouter();
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -86,7 +89,21 @@ export default function StudentPdf() {
   }
 
   if (error) {
-    return <div className="text-red-500 text-center">{error}</div>;
+    return (
+      <div className=" text-center  items-center justify-center h-full p-80 bg-[#100c14]">
+        <p className="text-red-500 text-2xl font-semibold mb-4">
+          Student have not filled the admission form
+        </p>
+        <motion.button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => router.push("/admission")}
+        >
+          Fill the form
+        </motion.button>
+      </div>
+    );
   }
 
   return (
