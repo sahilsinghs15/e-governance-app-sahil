@@ -22,7 +22,7 @@ const AdminAppbar = () => {
   };
   return (
     <div className="relative">
-      <div className="h-16 w-full flex items-center justify-between border-b border-gray-500 px-4 sm:px-10 bg-gray-900">
+      <div className="h-16 w-full flex items-center justify-between border-b border-gray-500 px-4 pt-3 sm:px-10 bg-gray-900">
         <div
           className="text-2x1 font-bold text-blue-600 hover:cursor-pointer"
           onClick={() => routerHandler("/admin")}

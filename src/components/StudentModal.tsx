@@ -47,7 +47,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           <X className="h-6 w-6" />
         </button>
         <h2 className="text-2xl font-bld mb-4 text-black">Student Details</h2>
-        <div className="space-y-4">
+        <div className="space-y-4 text-black">
           <p>
             <strong>Name:</strong> {student.name}
           </p>
@@ -77,7 +77,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
           <Button variant="outline" onClick={handleReject}>
           Reject
           </Button>
-          <Button variant="default" onClick={handleAccept}>
+          <Button className="border border-black" variant="default" onClick={handleAccept}>
             Accept
           </Button>
         </div>

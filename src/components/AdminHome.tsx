@@ -6,7 +6,7 @@ import { StudentModal } from "./StudentModal";
 import toast from "react-hot-toast";
 import StudentCard from "./StudentCard";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-
+import { motion } from "framer-motion"
 interface Student {
   _id: string;
   userId: string;
@@ -109,16 +109,16 @@ const AdminHome: React.FC = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-800 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6">Admin Home</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {students.map((student) => (
           <div key={student._id} className="border p-4 rounded bg-white shadow">
-            //@ts-ignore
+            
             <StudentCard student={student} onClick={handleCardClick} />
             <div className="flex justify-between mt-4">
               {student.accepted ? (
-                <span className="text-green-600 font-semibold">Verified</span>
+                <span className="text-green-600 font-semibold flex justify-center items-center text-center">Verified</span>
               ) : (
                 <>
                   <button
@@ -138,7 +138,7 @@ const AdminHome: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {showModal && selectedStudent && (
         <StudentModal student={selectedStudent} onClose={closeModal} />

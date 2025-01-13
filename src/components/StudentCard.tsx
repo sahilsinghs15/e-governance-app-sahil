@@ -22,11 +22,20 @@ interface StudentCardProps {
 const StudentCard: React.FC<StudentCardProps> = ({ student, onClick }) => {
   return (
     <div
-      className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
+      className="bg-white p-4 border border-black m-3 rounded-lg shadow-md hover:shadow-lg cursor-pointer"
       onClick={() => onClick(student)}
     >
-      <h2 className="text-xl font-semibold text-black mb-2">{student.name}</h2>
-      <ul className="list-disc">
+      <h2 className="text-xl font-semibold text-black mb-2 capitalize">{student.name}</h2>
+      <div className="text-black">
+        <p >Email : {student.email}</p>
+        <p>Phone : {student.phone}</p>
+        <p>DOB : {new Date(student.dob).toLocaleDateString()}</p>
+        <p>Gender : {student.gender}</p>
+        <p>Course : {student.course}</p>
+        <p></p>
+        <p></p>
+      </div>
+      {/* <ul className="list-disc">
         <li className="text-gray-600">Email: {student.email}</li>
         <li className="text-gray-600">Phone: {student.phone}</li>
         <li className="text-gray-600">
@@ -34,7 +43,7 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onClick }) => {
         </li>
         <li className="text-gray-600">Gender: {student.gender}</li>
         <li className="text-gray-600">Course: {student.course}</li>
-      </ul>
+      </ul> */}
     </div>
   );
 };
