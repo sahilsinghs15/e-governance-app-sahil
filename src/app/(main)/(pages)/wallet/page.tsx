@@ -6,8 +6,8 @@ export default function WalletPage() {
     <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col items-center justify-center">
       
 
-      <header className="min-h-screen w-full py-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col items-center justify-center">
-        <div className="max-w-full mx-auto text-center">
+      <header className=" w-full py-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col  justify-center">
+        <div className="text-center ">
           <h1 className="text-3xl font-bold"> My Wallet</h1>
           <p className="text-gray-400 mt-2">
             View youre wallet balance and recent transitions.

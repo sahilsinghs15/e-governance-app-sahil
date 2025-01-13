@@ -1,31 +1,27 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-
-interface IWallet extends Document  {
-  studentId  : mongoose.Types.ObjectId;
-  balance : number;
+interface IWallet extends Document {
+  balance: number;
+  studentId: mongoose.Types.ObjectId;
 }
 
-const WalletSchema : Schema =  new Schema<IWallet> (
+const WalletSchema: Schema = new Schema(
   {
-    studentId : {
-      type : mongoose.Schema.Types.ObjectId,
-      required : true, 
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
       ref: "Student",
     },
-
-    balance : {
-      type : Number,
-      required : true,
-      default : 500,
+    balance: {
+      type: Number,
+      required: true,
+      default: 500,
     },
   },
-  {
-    timestamps : true
-  }
-)
+  { timestamps: true }
+);
 
-const Wallet  = mongoose.models.Wallet || mongoose.model<IWallet>("Waller" , WalletSchema);
-
+const Wallet =
+  mongoose.models.Wallet || mongoose.model<IWallet>("Wallet", WalletSchema);
 
 export default Wallet;

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Transaction {
   id: string;
@@ -58,11 +59,15 @@ const WalletCard = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-white text-center">Loading...</div>;
-  }
+      return <div className="flex items-center justify-center min-h-screen bg-[#111827]">
+                <AiOutlineLoading3Quarters className="text-4xl text-blue-700 animate-spin"/>
+                <span className="ml-4 text-lg text-gray-600">Loading Please Wait.....</span>
+            </div>
+    }
 
   if (error) {
     return <div className="text-red-500 text-center">{error}</div>;
+    
   }
 
   return (
