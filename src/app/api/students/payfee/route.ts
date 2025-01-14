@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Student from "@/models/Student_Registration";
-import { connectToDB } from "@/db/mongo"; 
+import { connectToDB } from "@/db/mongo";
 
 export async function POST(req: Request) {
   try {
@@ -44,8 +44,8 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid course" }, { status: 400 });
     }
 
-    // Assign a roll number
-    const assignedRollNumber = await assignRollNumber(rollNumberRange);
+    // Assign a roll number based on the number of students already admitted
+    const assignedRollNumber = await assignRollNumber(student.course, rollNumberRange);
     if (!assignedRollNumber) {
       return NextResponse.json(
         { error: "No roll numbers available" },
@@ -69,22 +69,20 @@ export async function POST(req: Request) {
   }
 }
 
-async function assignRollNumber({
-  start,
-  end,
-}: {
-  start: number;
-  end: number;
-}) {
-  const usedRollNumbers = await Student.find({
-    rollNo: { $gte: start, $lte: end },
-  }).distinct("rollNo");
+async function assignRollNumber(
+  course: string,
+  { start, end }: { start: number; end: number }
+) {
+  // Count the number of students already admitted in this course
+  const studentCount = await Student.countDocuments({ course, admitted: true });
 
-  for (let i = start; i <= end; i++) {
-    if (!usedRollNumbers.includes(i)) {
-      return i;
-    }
+  // Calculate the new roll number
+  const newRollNumber = start + studentCount;
+
+  // Ensure the new roll number does not exceed the range
+  if (newRollNumber > end) {
+    return null; // No roll numbers available
   }
 
-  return null;
+  return newRollNumber;
 }

@@ -1,12 +1,17 @@
 //footer
-
+"use client";
 import {
   faFacebookF,
   faTwitter,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toast from "react-hot-toast";
 export const Footer = () => {
+
+  const handleSubscribe = ()=>{
+    toast.success("Subscribed!");
+  }
    return (
      <footer className="bg-[#171717] text-white py-8 border-t border-gray-600 ">
        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -109,7 +114,7 @@ export const Footer = () => {
                  placeholder="Your email address"
                  className="w-full px-4 py-2 text-sm bg-gray-800 border border-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                />
-               <button className="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 rounded-r-md">
+               <button onClick={handleSubscribe} className="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 rounded-r-md">
                  Subscribe
                </button>
              </div>
