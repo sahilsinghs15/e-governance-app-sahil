@@ -1,17 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-
-
 enum Gender {
-  Male = "Male",
-  Female = "Female",
-  Other = "Other",
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
-enum Courses {
-  IT = "IT", 
+enum Course {
+  IT = "IT",
   CS = "CS",
-  DS = "DS"
+  DS = "DS",
 }
 
 export interface studentInterface extends Document {
@@ -21,7 +19,7 @@ export interface studentInterface extends Document {
   phone: number;
   dob: Date;
   gender: Gender;
-  course: Courses;
+  course: Course;
   rollNo?: string;
   accepted?: boolean;
   admitted?: boolean;
@@ -35,65 +33,58 @@ const studentSchema = new Schema<studentInterface>(
       required: true,
       ref: "User",
     },
-    name : {
-      type : String,
-      trim : true, 
-      required : true,
+    name: {
+      required: true,
+      type: String,
+      trim: true,
     },
-
-
-    email : {
-      type : String, 
-      required : true,
-      unique : true,
-      lowercase  : true,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
       match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
     },
 
-    phone : {
+    phone: {
+      required: true,
       type: Number,
-      required : true
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    gender: {
+      required: true,
+      type: String,
+      enum: Object.values(Gender),
     },
 
-    dob : {
-      type : Date,
-      required :true
-    },
-    
-    
-    gender :{
-      type : String,
-      required :true ,
-      enum  :   Object.values(Gender),
+    course: {
+      required: true,
+      type: String,
+      enum: Object.values(Course),
     },
 
-    course : {
-      type :String ,
-      required :true ,
-      enum : Object.values(Courses)
+    rollNo: {
+      type: String,
+    },
+    accepted: {
+      type: Boolean,
+      default: false,
     },
 
-    rollNo  :{ 
-      type : String,
+    admitted: {
+      type: Boolean,
+      default: false,
     },
-    
-    accepted :{
-      type : Boolean ,
-      default : false,
-    },
-
-    admitted : {
-      type :Boolean ,
-      default :false
-    }
   },
-   {
-    timestamps : true
-   }
+  {
+    timestamps: true,
+  }
 );
 
-
-const Student = mongoose.models.Student  || mongoose.model<studentInterface>("Student", studentSchema);
-
-
+const Student =
+  mongoose.models.Student ||
+  mongoose.model<studentInterface>("Student", studentSchema);
 export default Student;

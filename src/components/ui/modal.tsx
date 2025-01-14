@@ -242,9 +242,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             >
               <option value="">Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
             {errors.gender && (
               <p className="text-xs text-red-500 mt-1">{errors.gender}</p>

@@ -18,28 +18,30 @@ const HeroSection = () => {
   const router = useRouter();
 
   return (
-    <div className="bg-gray-50 text-gray-800">
+    <div className="bg-gray-50 ">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-500 via-purple-600 to-indigo-500 text-white py-16 px-4 sm:py-20 sm:px-10">
+      <section className="relative bg-[#171717] text-white py-16 pt-4  sm:py-20 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="container mx-auto text-center max-w-4xl"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-            Welcome to the <span className="text-yellow-300">E-Governance</span>{" "}
+          <h1 className="text-4xl  sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+            Welcome to the <span className="text-blue-700">E-Governance</span>{" "}
             Platform
           </h1>
           <p className="mt-6 text-lg sm:text-xl lg:text-2xl leading-relaxed">
             Empowering institutions with efficient admissions, academics, and
             resources management for a seamless experience.
           </p>
+
+          {/* Button */}
           <div className="gap-3 space-x-3">
             <motion.button
               onClick={() => router.push("/admission")}
               whileHover={{ scale: 1.1 }}
-              className="mt-8 px-8 py-4 bg-yellow-300 text-gray-800 font-semibold rounded-2xl shadow-lg hover:bg-yellow-400 transition-all"
+              className="mt-8 px-8 py-4 bg-[#2563eb] text-white font-semibold rounded-2xl shadow-lg hover:bg-blue-800-900 transition-all"
             >
               Get Started
             </motion.button>
@@ -50,6 +52,41 @@ const HeroSection = () => {
             >
               Learn more
             </motion.button>
+          </div>
+
+          {/* Cards */}
+
+          <div className="mt-8 flex px-36 items-center gap-8 space-x-8 justify-center">
+            {/* 24/7 Online Access */}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="h-32 bg-[#262626] border border-gray-600  w-36 flex flex-col items-center justify-center py-6 rounded-lg shadow-lg"
+            >
+              <h1 className="text-3xl text-[#3b82f6] font-bold">24/7</h1>
+              <p className="pt-2 text-white">Online Access</p>
+            </motion.div>
+
+            {/* 100% Digital Process */}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="h-32 bg-[#262626] border border-gray-600  w-36 flex flex-col items-center justify-center py-6 rounded-lg shadow-lg"
+            >
+              <h1 className="text-3xl text-purple-500 font-bold">100%</h1>
+              <p className="pt-2 text-white">Digital Process</p>
+            </motion.div>
+
+            {/* Fast Processing */}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className="h-32 bg-[#262626] border border-gray-600  w-36 flex flex-col items-center justify-center py-6 rounded-lg shadow-lg"
+            >
+              <h1 className="text-3xl text-green-500 font-bold">Fast</h1>
+              <p className="pt-2 text-white">Processing</p>
+            </motion.div>
+          </div>
+
+          <div className="">
+
           </div>
         </motion.div>
       </section>

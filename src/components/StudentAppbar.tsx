@@ -18,7 +18,7 @@ const StudentAppbar = () => {
   return (
     <div className="relative">
       {/* AppBar */}
-      <div className="h-16 w-full flex items-center justify-between border-b border-gray-500 px-4 sm:px-10 bg-gray-900">
+      <div className="h-16 w-full flex items-center justify-between border-b border-gray-500 px-4 sm:px-10 bg-[#171717]">
         {/* Logo Section */}
         <div
           className="text-xl sm:text-2xl font-bold flex items-center gap-2 cursor-pointer text-blue-500"
