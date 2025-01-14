@@ -27,16 +27,7 @@ export const StudentModal: React.FC<StudentModalProps> = ({
   student,
   onClose,
 }) => {
-  const handleAccept = () => {
-    toast.success(`Fee receipt generated for: ${student.name}`);
-      onClose();
-  };
   
-  const handleReject= () => {
-    toast.success(`Rejected admission for: ${student.name}`);
-    onClose();
-  };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full max-w-lg bg-white rounded-lg shadow-lg p-6">
@@ -67,20 +58,10 @@ export const StudentModal: React.FC<StudentModalProps> = ({
             <strong>Course:</strong> {student.course}
           </p>
           <p>
-            <strong>Roll No:</strong> {student.rollNo || "N/A"}
-          </p>
-          <p>
             <strong>Admitted:</strong> {student.admitted ? "Yes" : "No"}
           </p>
         </div>
-        <div className="flex justify-end mt-6 space-x-4">
-          <Button variant="outline" onClick={handleReject}>
-          Reject
-          </Button>
-          <Button className="border border-black" variant="default" onClick={handleAccept}>
-            Accept
-          </Button>
-        </div>
+        
       </div>
     </div>
   );

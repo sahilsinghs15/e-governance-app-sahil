@@ -102,7 +102,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           email: email,
           phone: phone,
           dob: dob,
-          gender: gender.toUpperCase(),
+          gender: gender,
           course: course,
         }),
       });
@@ -242,9 +242,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             >
               <option value="">Select your gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
             </select>
             {errors.gender && (
               <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
@@ -268,11 +268,11 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
             >
               <option value="">Select your Course</option>
-              <option value="Information Technology">
+              <option value="IT">
                 Information Technology
               </option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Data Science">Data Science</option>
+              <option value="CS">Computer Science</option>
+              <option value="DS">Data Science</option>
             </select>
           </div>
           
