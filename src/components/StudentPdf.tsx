@@ -89,22 +89,40 @@ export default function StudentPdf() {
   }
 
   if (error) {
-    return (
-      <div className=" text-center  items-center justify-center h-full p-80 bg-[#100c14]">
-        <p className="text-red-500 text-2xl font-semibold mb-4">
-          Student have not filled the admission form
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center">
+      <div className="text-center bg-white p-8 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105">
+        {/* Error Icon */}
+        <div className="text-red-500 text-5xl mb-4">
+          <AiOutlineLoading3Quarters className="animate-pulse" />
+        </div>
+
+        {/* Error Message */}
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-2">
+          Admission Form Not Found
+        </h1>
+        <p className="text-lg text-gray-600 mb-6">
+          It seems you haven’t filled out your admission form yet. Complete it
+          to proceed with your application.
         </p>
+
+        {/* Call-to-action Button */}
         <motion.button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 active:scale-95"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => router.push("/admission")}
         >
-          Fill the form
+          Fill the Admission Form
         </motion.button>
       </div>
-    );
-  }
+
+      <p className="mt-8 text-gray-400 text-sm">
+        Need help? Contact the admissions office for assistance.
+      </p>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-900 via-indigo-800 to-purple-900 text-white flex items-center justify-center">
