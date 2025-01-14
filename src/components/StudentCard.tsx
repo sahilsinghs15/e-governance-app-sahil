@@ -35,15 +35,7 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onClick }) => {
         <p></p>
         <p></p>
       </div>
-      {/* <ul className="list-disc">
-        <li className="text-gray-600">Email: {student.email}</li>
-        <li className="text-gray-600">Phone: {student.phone}</li>
-        <li className="text-gray-600">
-          DOB: {new Date(student.dob).toLocaleDateString()}
-        </li>
-        <li className="text-gray-600">Gender: {student.gender}</li>
-        <li className="text-gray-600">Course: {student.course}</li>
-      </ul> */}
+      
     </div>
   );
 };
