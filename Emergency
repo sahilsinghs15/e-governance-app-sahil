@@ -1,0 +1,57 @@
+"use client";
+
+import React, { useState } from "react";
+
+export default function FileUploader() {
+  const [fileName, setFileName] = useState("");
+
+  // Convert file to base64
+  const convertToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
+  // Handle file upload
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFileName(file.name); // Save the file name for later retrieval
+      try {
+        const base64 = await convertToBase64(file);
+        localStorage.setItem("wordFile", JSON.stringify({ fileName: file.name, base64 }));
+        alert("File saved to Local Storage successfully!");
+      } catch (error) {
+        console.error("Error converting file:", error);
+        alert("Failed to store file.");
+      }
+    }
+  };
+
+  // Handle file retrieval
+  const handleFileDownload = () => {
+    const storedData = localStorage.getItem("wordFile");
+    if (storedData) {
+      const { fileName, base64 } = JSON.parse(storedData);
+
+      // Create a download link
+      const link = document.createElement("a");
+      link.href = base64;
+      link.download = fileName;
+      link.click();
+    } else {
+      alert("No file found in Local Storage.");
+    }
+  };
+
+  return (
+    <div>
+      <h1>Word File Uploader</h1>
+      <input type="file" accept=".doc,.docx" onChange={handleFileUpload} />
+      <button onClick={handleFileDownload}>Download Stored File</button>
+      {fileName && <p>Uploaded File: {fileName}</p>}
+    </div>
+  );
+}
